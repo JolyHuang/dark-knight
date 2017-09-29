@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.analysis/com.sharingif.cube.dark.knight.analysis.iml" filepath="$PROJECT_DIR$/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.analysis/com.sharingif.cube.dark.knight.analysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.collection/com.sharingif.cube.dark.knight.collection.iml" filepath="$PROJECT_DIR$/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.collection/com.sharingif.cube.dark.knight.collection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.parent.iml" filepath="$PROJECT_DIR$/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/dark-knight.iml" filepath="$PROJECT_DIR$/.idea/dark-knight.iml" />
+    </modules>
+  </component>
+</project>
