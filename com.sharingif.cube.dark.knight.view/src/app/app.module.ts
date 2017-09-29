@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -8,12 +9,17 @@ import { HeaderComponent } from './header.component';
 import { ThemeSwitcherComponent } from './theme.switcher.component';
 import { FooterComponent } from './footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TransactionComponent } from './transaction/transaction.component';
 
 
 const appRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+  },
+  {
+    path: 'transaction',
+    component: TransactionComponent,
   },
   { path: '',
     redirectTo: '/dashboard',
@@ -28,10 +34,12 @@ const appRoutes: Routes = [
     HeaderComponent,
     ThemeSwitcherComponent,
     FooterComponent,
-    DashboardComponent
+    DashboardComponent,
+    TransactionComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
