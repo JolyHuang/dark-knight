@@ -7,8 +7,8 @@ import { NavbarComponent } from './navbar.component';
 import { HeaderComponent } from './header.component';
 import { ThemeSwitcherComponent } from './theme.switcher.component';
 import { FooterComponent } from './footer.component';
-
 import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 const appRoutes: Routes = [
   {
@@ -16,9 +16,9 @@ const appRoutes: Routes = [
     component: DashboardComponent,
   },
   { path: '',
-    redirectTo: 'dashboard',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({

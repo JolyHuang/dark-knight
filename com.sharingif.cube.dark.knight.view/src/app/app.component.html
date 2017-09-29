@@ -3,17 +3,22 @@
   <!-- ############ LAYOUT START-->
 
   <!-- aside -->
-  <app-navbar></app-navbar>
-  <!-- / aside -->
+  <div id="aside" class="app-aside modal nav-dropdown">
+    <!-- fluid app aside -->
+    <app-navbar></app-navbar>
+  </div>
+  <!-- / -->
 
   <!-- content -->
-  <div id="content" class="app-content box-shadow-z3" role="main">
-    <app-header></app-header>
+  <div id="content" class="app-content box-shadow-z0" role="main">
+    <div class="app-header white box-shadow">
+      <app-header></app-header>
+    </div>
     <app-footer></app-footer>
     <div ui-view class="app-body" id="view">
 
       <!-- ############ PAGE START-->
-      <!--<router-outlet></router-outlet>-->
+      <router-outlet></router-outlet>
       <!-- ############ PAGE END-->
 
     </div>
