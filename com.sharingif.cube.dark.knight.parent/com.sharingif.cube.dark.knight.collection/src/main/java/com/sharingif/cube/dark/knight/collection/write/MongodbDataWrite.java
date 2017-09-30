@@ -3,12 +3,16 @@ package com.sharingif.cube.dark.knight.collection.write;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.collection.handler.TransactionType;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,6 +26,8 @@ import java.util.Map;
  */
 @Component
 public class MongodbDataWrite implements DataWrite, InitializingBean {
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String host;
     private int port;
@@ -61,6 +67,14 @@ public class MongodbDataWrite implements DataWrite, InitializingBean {
 
     @Override
     public void write(LinkedHashMap<String, Object> data) {
+
+        String startTime = (String)data.get("startTime");
+        try {
+            data.put("startTime", DateUtils.getDate(startTime, DateUtils.DATETIME_MILLI_ISO_FORMAT));
+        } catch (ParseException e) {
+            logger.error("parse date error", e);
+        }
+
         String transType = (String)data.get(TransactionType.TRANS_TYPE.toString());
         if(transType.equals(TransactionType.SERVER_START.toString())
                 || transType.equals(TransactionType.SERVER_STOP.toString())

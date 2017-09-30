@@ -5,9 +5,6 @@
         <thead>
         <tr>
           <th>
-            交易唯一编号
-          </th>
-          <th>
             用户ID
           </th>
           <th>
@@ -20,18 +17,17 @@
             错误码
           </th>
           <th>
-            错误信息
+            交易开始时间
           </th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>Isidra</td>
-          <td><a href>Boudreaux</a></td>
-          <td>Traffic Court Referee</td>
-          <td data-value="78025368997">22 Jun 1972</td>
-          <td data-value="1"><span class="label success" title="Active">Active</span></td>
-          <td data-value="1"><span class="label success" title="Active">Active</span></td>
+        <tr *ngFor="let transaction of transactionList">
+          <td>{{transaction.userId}}</td>
+          <td>{{transaction.transType}}</td>
+          <td>{{transaction.transId}}</td>
+          <td>{{transaction.message}}</td>
+          <td>{{transaction.startTime}}</td>
         </tr>
         </tbody>
         <tfoot class="hide-if-no-paging">
