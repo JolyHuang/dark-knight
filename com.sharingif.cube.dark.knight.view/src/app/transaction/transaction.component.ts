@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Injectable }    from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
+import { Transaction } from './transaction';
 
 
 const headers = new HttpHeaders().set("Content-Type", "application/json");
@@ -17,6 +18,8 @@ const headers = new HttpHeaders().set("Content-Type", "application/json");
 export class TransactionComponent implements OnInit {
 
   constructor(private http: HttpClient) {};
+
+  @Input() trans: Transaction = new Transaction();
 
   transactionList = null;
 

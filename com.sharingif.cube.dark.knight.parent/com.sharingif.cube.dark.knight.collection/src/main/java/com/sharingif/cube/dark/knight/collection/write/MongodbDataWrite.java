@@ -70,7 +70,7 @@ public class MongodbDataWrite implements DataWrite, InitializingBean {
 
         String startTime = (String)data.get("startTime");
         try {
-            data.put("startTime", DateUtils.getDate(startTime, DateUtils.DATETIME_MILLI_ISO_FORMAT));
+            data.put("startTime", DateUtils.getDate(startTime, "yyyy-MM-dd HH:mm:ss.SSS"));
         } catch (ParseException e) {
             logger.error("parse date error", e);
         }
