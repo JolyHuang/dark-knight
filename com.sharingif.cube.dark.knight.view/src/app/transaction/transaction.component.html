@@ -33,7 +33,7 @@
             </div>
         </div>
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn white">提交</button>
+            <button type="submit" (click)="queryList()" class="btn white">提交</button>
           </div>
       </form>
     </div>
@@ -41,7 +41,7 @@
 
   <div class="box">
     <div>
-      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="5">
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
         <thead>
         <tr>
           <th>
@@ -67,7 +67,7 @@
           <td>{{transaction.transType}}</td>
           <td>{{transaction.transId}}</td>
           <td>{{transaction.message}}</td>
-          <td>{{transaction.startTime}}</td>
+          <td>{{transaction.startTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
         </tr>
         </tbody>
         <tfoot class="hide-if-no-paging">

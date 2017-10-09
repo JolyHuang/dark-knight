@@ -1,14 +1,19 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.dao.impl;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.dark.knight.analysis.app.dao.impl.CubeMongoDBDAOImpl;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import org.bson.Document;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * 查询交易信息
@@ -28,9 +33,18 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
     }
 
     @Override
-    public List<Document> queryList() {
+    public List<Document> queryList(Transaction transaction) {
+
+        BasicDBObject filter = new BasicDBObject();
+        if(StringUtils.isTrimEmpty(transaction.getTransId())) {
+            filter.put(Transaction.TRANS_ID_KEY, transaction.getTransId());
+        }
+        if(StringUtils.isTrimEmpty(transaction.getMessage())) {
+            filter.put(Transaction.MESSAGE_KEY, transaction.getMessage());
+        }
+
         List<Document> documentList = new LinkedList<Document>();
-        MongoCursor<Document> cursor = getCollection().find().iterator();
+        MongoCursor<Document> cursor = getCollection().find(filter).iterator();
         try {
             while (cursor.hasNext()) {
                 documentList.add(cursor.next());

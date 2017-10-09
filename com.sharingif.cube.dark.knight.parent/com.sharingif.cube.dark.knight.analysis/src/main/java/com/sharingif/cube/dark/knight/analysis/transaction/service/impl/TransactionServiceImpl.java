@@ -1,6 +1,7 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.service.impl;
 
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Document> getList() {
-        return transactionDAO.queryList();
+    public List<Document> getList(Transaction transaction) {
+        return transactionDAO.queryList(transaction);
     }
 
 }

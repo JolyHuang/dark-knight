@@ -23,9 +23,9 @@ export class TransactionComponent implements OnInit {
 
   transactionList = null;
 
-  ngOnInit(): void {
+  queryList() : void {
     this.http
-      .post('http://127.0.0.1:8080/dark-knight-analysis/transaction/list', {},{headers})
+      .post('http://127.0.0.1:8080/dark-knight-analysis/transaction/list', this.trans,{headers})
       .subscribe(
         res => {
           this.transactionList = res["_data"];
@@ -33,9 +33,14 @@ export class TransactionComponent implements OnInit {
         },
         err => {
           console.log("Error occured");
-        }
-      );
+        });
+  }
 
+
+
+
+  ngOnInit(): void {
+    this.queryList();
   }
 
 }

@@ -1,5 +1,6 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.dao;
 
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import org.bson.Document;
 
 import java.util.List;
@@ -14,6 +15,6 @@ import java.util.List;
  */
 public interface TransactionDAO {
 
-    List<Document> queryList();
+    List<Document> queryList(Transaction transaction);
 
 }
