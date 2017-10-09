@@ -36,10 +36,25 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
     public List<Document> queryList(Transaction transaction) {
 
         BasicDBObject filter = new BasicDBObject();
-        if(StringUtils.isTrimEmpty(transaction.getTransId())) {
+
+        if(!StringUtils.isTrimEmpty(transaction.getTransType())) {
+            filter.put(Transaction.TRANS_TYPE_KEY, transaction.getTransType());
+        }
+        BasicDBObject startTime = new BasicDBObject();
+        if(transaction.getStartTimeBegin() != null) {
+            filter.put(Transaction.STARTTIME_KEY, startTime.append("$gte", transaction.getStartTimeBegin()));
+
+            if(transaction.getStartTimeEnd() != null) {
+                startTime.append("$lt", transaction.getStartTimeEnd());
+            }
+        }
+        if((transaction.getStartTimeBegin() == null) && (transaction.getStartTimeEnd() != null)) {
+            filter.put(Transaction.STARTTIME_KEY, startTime.append("$lt", transaction.getStartTimeEnd()));
+        }
+        if(!StringUtils.isTrimEmpty(transaction.getTransId())) {
             filter.put(Transaction.TRANS_ID_KEY, transaction.getTransId());
         }
-        if(StringUtils.isTrimEmpty(transaction.getMessage())) {
+        if(!StringUtils.isTrimEmpty(transaction.getMessage())) {
             filter.put(Transaction.MESSAGE_KEY, transaction.getMessage());
         }
 

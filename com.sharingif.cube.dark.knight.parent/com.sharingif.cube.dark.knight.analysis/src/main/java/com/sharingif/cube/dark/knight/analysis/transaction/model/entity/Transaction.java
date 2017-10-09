@@ -1,5 +1,7 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -12,11 +14,17 @@ import java.util.Date;
  */
 public class Transaction {
 
+    public static final String TRANSACTION_BEGIN = "transactionBegin";
+
+    public static final String TRANS_TYPE_KEY = "transType";
     public static final String TRANS_ID_KEY = "transId";
     public static final String MESSAGE_KEY = "message";
     public static final String STARTTIME_KEY = "startTime";
 
+    private String transType;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTimeBegin;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTimeEnd;
     private String userId;
     private String thread;
@@ -27,6 +35,14 @@ public class Transaction {
     private String transExcuteTime;
     private String message;
     private String localizedMessage;
+
+    public String getTransType() {
+        return transType;
+    }
+
+    public void setTransType(String transType) {
+        this.transType = transType;
+    }
 
     public Date getStartTimeBegin() {
         return startTimeBegin;
@@ -119,7 +135,8 @@ public class Transaction {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Transaction{");
-        sb.append("startTimeBegin=").append(startTimeBegin);
+        sb.append("transType='").append(transType).append('\'');
+        sb.append(", startTimeBegin=").append(startTimeBegin);
         sb.append(", startTimeEnd=").append(startTimeEnd);
         sb.append(", userId='").append(userId).append('\'');
         sb.append(", thread='").append(thread).append('\'');

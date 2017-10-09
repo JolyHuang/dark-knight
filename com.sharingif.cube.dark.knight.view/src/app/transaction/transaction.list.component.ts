@@ -6,16 +6,18 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { Transaction } from './transaction';
 
+declare var $:any;
+
 
 const headers = new HttpHeaders().set("Content-Type", "application/json");
 
 @Component({
   selector: 'transaction',
-  templateUrl: './transaction.component.html',
+  templateUrl: './transaction.list.component.html',
 })
 
 @Injectable()
-export class TransactionComponent implements OnInit {
+export class TransactionListComponent implements OnInit {
 
   constructor(private http: HttpClient) {};
 
@@ -24,6 +26,7 @@ export class TransactionComponent implements OnInit {
   transactionList = null;
 
   queryList() : void {
+
     this.http
       .post('http://127.0.0.1:8080/dark-knight-analysis/transaction/list', this.trans,{headers})
       .subscribe(
@@ -34,13 +37,18 @@ export class TransactionComponent implements OnInit {
         err => {
           console.log("Error occured");
         });
-  }
+  };
 
+  clickQueryList() : void {
 
+    this.trans.startTimeBegin = $("#startTimeBegin").val();
+    this.trans.startTimeEnd= $("#startTimeEnd").val();
 
+    this.queryList();
+  };
 
   ngOnInit(): void {
     this.queryList();
-  }
+  };
 
 }
