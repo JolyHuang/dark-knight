@@ -1,5 +1,6 @@
 package com.sharingif.cube.dark.knight.collection.handler;
 
+import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +46,8 @@ public abstract class AbstractDataHandler implements DataHandler {
         GroupData[] groupDataArray = getGroupIndexArray();
 
         LinkedHashMap<String, Object> dataMap = new LinkedHashMap<String, Object>();
+        dataMap.put("serverIp", DarkKnightCollectionApplicationContext.IP);
+        dataMap.put("serverName", DarkKnightCollectionApplicationContext.SERVER_NAME);
         dataMap.put(TransactionType.TRANS_TYPE.toString(), getType());
         if(matcher.find()) {
             for(GroupData groupData : groupDataArray) {

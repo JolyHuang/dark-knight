@@ -1,6 +1,7 @@
 package com.sharingif.cube.dark.knight.collection.read;
 
 import com.sharingif.cube.core.exception.CubeRuntimeException;
+import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.collection.handler.DataHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,9 @@ public class RealTimeLineFileRead implements FileRead {
 
     @Override
     public void read(String filePath) {
+
+        String currentDate = DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT);
+        filePath = filePath.substring(0,filePath.length()-4)+"."+currentDate+filePath.substring(filePath.length()-4,filePath.length());
 
         FileReader fileReader = null;
         try {

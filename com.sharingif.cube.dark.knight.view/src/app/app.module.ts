@@ -12,6 +12,7 @@ import { ThemeSwitcherComponent } from './theme.switcher.component';
 import { FooterComponent } from './footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransactionListComponent } from './transaction/transaction.list.component';
+import { TransactionDetailsComponent } from './transaction/transaction.details.component';
 
 
 const appRoutes: Routes = [
@@ -22,6 +23,10 @@ const appRoutes: Routes = [
   {
     path: 'transaction',
     component: TransactionListComponent,
+  },
+  {
+    path: 'transactionDetails/:transUniqueId',
+    component: TransactionDetailsComponent,
   },
   { path: '',
     redirectTo: '/dashboard',
@@ -37,7 +42,8 @@ const appRoutes: Routes = [
     ThemeSwitcherComponent,
     FooterComponent,
     DashboardComponent,
-    TransactionListComponent
+    TransactionListComponent,
+    TransactionDetailsComponent
   ],
   imports: [
     BrowserModule,

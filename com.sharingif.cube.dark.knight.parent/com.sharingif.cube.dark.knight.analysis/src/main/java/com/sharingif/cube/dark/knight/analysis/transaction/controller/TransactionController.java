@@ -1,5 +1,6 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.controller;
 
+import com.sharingif.cube.core.handler.bind.annotation.PathVariable;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
@@ -34,5 +35,8 @@ public class TransactionController {
         return transactionService.getList(transaction);
     }
 
-
+    @RequestMapping(value="details/{transUniqueId}", method= RequestMethod.GET)
+    public List<Document> details(@PathVariable("transUniqueId") String transUniqueId) {
+        return transactionService.getDetailsByTransUniqueId(transUniqueId);
+    }
 }

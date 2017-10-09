@@ -17,4 +17,6 @@ public interface TransactionService {
 
     List<Document> getList(Transaction transaction);
 
+    List<Document> getDetailsByTransUniqueId(String transUniqueId);
+
 }

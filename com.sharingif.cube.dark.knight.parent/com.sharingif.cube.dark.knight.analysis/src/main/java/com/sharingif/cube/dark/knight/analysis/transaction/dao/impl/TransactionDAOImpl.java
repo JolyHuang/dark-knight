@@ -42,14 +42,14 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         }
         BasicDBObject startTime = new BasicDBObject();
         if(transaction.getStartTimeBegin() != null) {
-            filter.put(Transaction.STARTTIME_KEY, startTime.append("$gte", transaction.getStartTimeBegin()));
+            filter.put(Transaction.START_TIME_KEY, startTime.append("$gte", transaction.getStartTimeBegin()));
 
             if(transaction.getStartTimeEnd() != null) {
                 startTime.append("$lt", transaction.getStartTimeEnd());
             }
         }
         if((transaction.getStartTimeBegin() == null) && (transaction.getStartTimeEnd() != null)) {
-            filter.put(Transaction.STARTTIME_KEY, startTime.append("$lt", transaction.getStartTimeEnd()));
+            filter.put(Transaction.START_TIME_KEY, startTime.append("$lt", transaction.getStartTimeEnd()));
         }
         if(!StringUtils.isTrimEmpty(transaction.getTransId())) {
             filter.put(Transaction.TRANS_ID_KEY, transaction.getTransId());
@@ -57,9 +57,12 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         if(!StringUtils.isTrimEmpty(transaction.getMessage())) {
             filter.put(Transaction.MESSAGE_KEY, transaction.getMessage());
         }
+        if(!StringUtils.isTrimEmpty(transaction.getTransUniqueId())) {
+            filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transaction.getTransUniqueId());
+        }
 
         List<Document> documentList = new LinkedList<Document>();
-        MongoCursor<Document> cursor = getCollection().find(filter).iterator();
+        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,1)).iterator();
         try {
             while (cursor.hasNext()) {
                 documentList.add(cursor.next());

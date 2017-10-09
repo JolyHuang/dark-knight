@@ -1,6 +1,5 @@
 package com.sharingif.cube.dark.knight.collection.handler;
 
-import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -50,8 +49,6 @@ public class StartedBootstrapDataHandler extends AbstractDataHandler {
         GroupData[] groupDataArray = getGroupIndexArray();
 
         LinkedHashMap<String, Object> dataMap = new LinkedHashMap<String, Object>();
-        dataMap.put("serverIp", DarkKnightCollectionApplicationContext.IP);
-        dataMap.put("serverName", DarkKnightCollectionApplicationContext.SERVER_NAME);
         dataMap.put(TransactionType.TRANS_TYPE.toString(), getType());
         if(matcher.find()) {
             for(GroupData groupData : groupDataArray) {

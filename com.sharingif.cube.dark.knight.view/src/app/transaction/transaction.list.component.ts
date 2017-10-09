@@ -1,9 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Injectable }    from '@angular/core';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
 import { Transaction } from './transaction';
 
 declare var $:any;

@@ -29,7 +29,18 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Document> getList(Transaction transaction) {
+
         transaction.setTransType(Transaction.TRANSACTION_BEGIN);
+
+        return transactionDAO.queryList(transaction);
+    }
+
+    @Override
+    public List<Document> getDetailsByTransUniqueId(String transUniqueId) {
+
+        Transaction transaction = new Transaction();
+        transaction.setTransUniqueId(transUniqueId);
+
         return transactionDAO.queryList(transaction);
     }
 

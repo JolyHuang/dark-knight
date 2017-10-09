@@ -19,7 +19,8 @@ public class Transaction {
     public static final String TRANS_TYPE_KEY = "transType";
     public static final String TRANS_ID_KEY = "transId";
     public static final String MESSAGE_KEY = "message";
-    public static final String STARTTIME_KEY = "startTime";
+    public static final String START_TIME_KEY = "startTime";
+    public static final String TRANS_UNIQUE_ID_KEY = "transUniqueId";
 
     private String transType;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

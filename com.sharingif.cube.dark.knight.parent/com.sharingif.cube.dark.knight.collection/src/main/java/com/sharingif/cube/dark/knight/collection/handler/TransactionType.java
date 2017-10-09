@@ -14,6 +14,7 @@ public enum TransactionType {
     ,SERVER_START("serverStart")
     ,SERVER_STOP("serverStop")
     ,TRANSACTION_BEGIN("transactionBegin")
+    ,TRANSACTION_INFO("transactionInfo")
     ,TRANSACTION_END("transactionEnd")
     ,TRANSACTION_ERROR("transactionError")
     ,CONTROLLER_BEGIN("controllerBegin")
