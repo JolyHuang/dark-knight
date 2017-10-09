@@ -30,7 +30,9 @@ public class CompositeDataHandler implements DataHandler {
             if(dataHandler.isMatch(data)) {
                 LinkedHashMap<String, Object> dataMap = dataHandler.handle(data, bufferedReader);
 
-                write(dataMap);
+                if(dataMap != null) {
+                    write(dataMap);
+                }
 
                 return null;
             }
