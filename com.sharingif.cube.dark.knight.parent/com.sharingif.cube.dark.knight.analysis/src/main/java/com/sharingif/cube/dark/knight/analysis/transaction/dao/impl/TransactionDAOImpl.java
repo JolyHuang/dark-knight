@@ -7,13 +7,13 @@ import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.dark.knight.analysis.app.dao.impl.CubeMongoDBDAOImpl;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
+import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
 
 /**
  * 查询交易信息
@@ -33,7 +33,9 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
     }
 
     @Override
-    public List<Document> queryList(Transaction transaction) {
+    public PaginationRepertory<Document> queryList(PaginationCondition<Transaction> paginationCondition) {
+
+        Transaction transaction = paginationCondition.getCondition();
 
         BasicDBObject filter = new BasicDBObject();
 
@@ -60,6 +62,27 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         if(!StringUtils.isTrimEmpty(transaction.getTransUniqueId())) {
             filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transaction.getTransUniqueId());
         }
+
+        List<Document> documentList = new LinkedList<Document>();
+        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,1)).skip(paginationCondition.getCurrentPage()*paginationCondition.getPageSize()).limit(paginationCondition.getPageSize()).iterator();
+        try {
+            while (cursor.hasNext()) {
+                documentList.add(cursor.next());
+            }
+        } finally {
+            cursor.close();
+        }
+
+        PaginationRepertory<Document> paginationRepertory = new PaginationRepertory<Document>(0, documentList, paginationCondition);
+
+        return paginationRepertory;
+    }
+
+    @Override
+    public List<Document> queryList(String transUniqueId) {
+
+        BasicDBObject filter = new BasicDBObject();
+        filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transUniqueId);
 
         List<Document> documentList = new LinkedList<Document>();
         MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,1)).iterator();

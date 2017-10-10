@@ -1,7 +1,10 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.dao;
 
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
+import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
+import org.springframework.security.access.method.P;
 
 import java.util.List;
 
@@ -15,6 +18,8 @@ import java.util.List;
  */
 public interface TransactionDAO {
 
-    List<Document> queryList(Transaction transaction);
+    PaginationRepertory<Document> queryList(PaginationCondition<Transaction> paginationCondition);
+
+    List<Document> queryList(String transUniqueId);
 
 }

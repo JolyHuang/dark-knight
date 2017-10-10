@@ -1,6 +1,8 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.service;
 
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
+import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  */
 public interface TransactionService {
 
-    List<Document> getList(Transaction transaction);
+    PaginationRepertory<Document> getList(PaginationCondition<Transaction> paginationCondition);
 
     List<Document> getDetailsByTransUniqueId(String transUniqueId);
 

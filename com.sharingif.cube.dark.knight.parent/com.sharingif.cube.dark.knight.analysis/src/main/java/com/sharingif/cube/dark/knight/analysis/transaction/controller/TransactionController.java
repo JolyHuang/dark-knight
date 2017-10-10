@@ -5,6 +5,8 @@ import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
+import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
+import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
 import org.springframework.stereotype.Controller;
 
@@ -31,8 +33,8 @@ public class TransactionController {
     }
 
     @RequestMapping(value="list", method= RequestMethod.POST)
-    public List<Document> getList(Transaction transaction) {
-        return transactionService.getList(transaction);
+    public PaginationRepertory<Document> getList(PaginationCondition<Transaction> paginationCondition) {
+        return transactionService.getList(paginationCondition);
     }
 
     @RequestMapping(value="details/{transUniqueId}", method= RequestMethod.GET)

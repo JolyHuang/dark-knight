@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
+import { PaginationCondition } from '../pagination/pagination.condition';
 import { Transaction } from './transaction';
 
 declare var $:any;
@@ -20,15 +21,20 @@ export class TransactionListComponent implements OnInit {
 
   @Input() trans: Transaction = new Transaction();
 
+  paginationCondition : PaginationCondition<Transaction> = new PaginationCondition<Transaction>();
+
   transactionList = null;
 
   queryList() : void {
+    this.paginationCondition.condition = this.trans;
+    this.paginationCondition.currentPage = 0;
+    this.paginationCondition.pageSize = 10;
 
     this.http
-      .post('http://127.0.0.1:8080/dark-knight-analysis/transaction/list', this.trans,{headers})
+      .post('http://127.0.0.1:8080/dark-knight-analysis/transaction/list', this.paginationCondition,{headers})
       .subscribe(
         res => {
-          this.transactionList = res["_data"];
+          this.transactionList = res["_data"].pageItems;
           console.log(res);
         },
         err => {

@@ -3,6 +3,8 @@ package com.sharingif.cube.dark.knight.analysis.transaction.service.impl;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
+import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
+import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 
@@ -28,20 +30,15 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Document> getList(Transaction transaction) {
+    public PaginationRepertory<Document> getList(PaginationCondition<Transaction> paginationCondition) {
 
-        transaction.setTransType(Transaction.TRANSACTION_BEGIN);
-
-        return transactionDAO.queryList(transaction);
+        return transactionDAO.queryList(paginationCondition);
     }
 
     @Override
     public List<Document> getDetailsByTransUniqueId(String transUniqueId) {
 
-        Transaction transaction = new Transaction();
-        transaction.setTransUniqueId(transUniqueId);
-
-        return transactionDAO.queryList(transaction);
+        return transactionDAO.queryList(transUniqueId);
     }
 
 }
