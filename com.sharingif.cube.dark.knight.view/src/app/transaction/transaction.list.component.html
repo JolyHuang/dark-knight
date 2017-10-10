@@ -23,17 +23,30 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="transId" class="col-sm-2 form-control-label">交易名称</label>
-            <div class="col-sm-4">
-              <input id="transId" name="transId" [(ngModel)]="trans.transId" class="form-control" />
-            </div>
-            <label for="message" class="col-sm-2 form-control-label">错误码</label>
-            <div class="col-sm-4">
-              <input id="message" name="message" [(ngModel)]="trans.message" class="form-control" />
-            </div>
+          <label for="userId" class="col-sm-2 form-control-label">用户ID</label>
+          <div class="col-sm-4">
+            <input id="userId" name="userId" [(ngModel)]="trans.userId" class="form-control" />
+          </div>
+          <label class="col-sm-2 form-control-label">交易类型</label>
+          <div class="col-sm-4">
+            <select id="transType" name="transType" class="form-control c-select" [(ngModel)]="trans.transType">
+              <option *ngFor="let transType of transTypeList" [ngValue]="transType.value">{{transType.name}}</option>
+            </select>
+          </div>
         </div>
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" (click)="clickQueryList()" class="btn white">提交</button>
+        <div class="form-group row">
+          <label for="transId" class="col-sm-2 form-control-label">交易名称</label>
+          <div class="col-sm-4">
+            <input id="transId" name="transId" [(ngModel)]="trans.transId" class="form-control" />
+          </div>
+          <label for="message" class="col-sm-2 form-control-label">错误码</label>
+          <div class="col-sm-4">
+            <input id="message" name="message" [(ngModel)]="trans.message" class="form-control" />
+          </div>
+        </div>
+          <div class="col-sm-offset-6 col-sm-10">
+            <button type="submit" (click)="clickQueryList()" class="btn btn-fw dark">查询</button>
+            <button type="submit" (click)="reset()" class="btn btn-fw dark">重置</button>
           </div>
       </form>
     </div>
@@ -46,6 +59,9 @@
         <tr>
           <th>
             用户ID
+          </th>
+          <th>
+            交易类型
           </th>
           <th>
             交易名称
@@ -62,18 +78,33 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let transaction of transactionList">
+        <tr *ngFor="let transaction of paginationRepertory.pageItems">
           <td>{{transaction.userId}}</td>
+          <td>{{transaction.transType}}</td>
           <td>{{transaction.transId}}</td>
           <td>{{transaction.message}}</td>
           <td>{{transaction.startTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
-          <td><button class="btn btn-outline rounded b-accent text-accent" routerLink="../transactionDetails/{{transaction.transUniqueId}}">详情</button></td>
+          <td><button class="btn rounded white" routerLink="../transactionDetails/{{transaction.transUniqueId}}">详情</button></td>
         </tr>
         </tbody>
-        <tfoot class="hide-if-no-paging">
+        <tfoot>
         <tr>
-          <td colspan="5" class="text-center">
-            <ul class="pagination"></ul>
+          <td colspan="5" class="text-center footable-visible">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing {{paginationRepertory.currentIndex}} to {{paginationRepertory.currentIndex+paginationCondition.pageSize}} of {{paginationRepertory.totalCount}} entries</div>
+              </div>
+              <div class="col-sm-6">
+              </div>
+              <div class="col-sm-2">
+                <div class="btn-group dataTables_paginate paging_simple_numbers">
+                  <button type="button" class="btn white" (click)="first()">First</button>
+                  <button type="button" class="btn white" (click)="prev()">Prev</button>
+                  <button type="button" class="btn white" (click)="next()">Next</button>
+                  <button type="button" class="btn white" (click)="last()">Last</button>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
         </tfoot>

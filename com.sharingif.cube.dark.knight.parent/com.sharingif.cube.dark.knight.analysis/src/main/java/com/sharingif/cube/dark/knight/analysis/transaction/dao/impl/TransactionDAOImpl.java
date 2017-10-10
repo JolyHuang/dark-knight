@@ -59,12 +59,21 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         if(!StringUtils.isTrimEmpty(transaction.getMessage())) {
             filter.put(Transaction.MESSAGE_KEY, transaction.getMessage());
         }
+        if(!StringUtils.isTrimEmpty(transaction.getUserId())) {
+            filter.put(Transaction.USER_ID_KEY, transaction.getUserId());
+        }
         if(!StringUtils.isTrimEmpty(transaction.getTransUniqueId())) {
             filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transaction.getTransUniqueId());
         }
 
+        long totalCount = getCollection().count(filter);
+
+        if(totalCount == 0) {
+            return  new PaginationRepertory<Document>(0, null, paginationCondition);
+        }
+
         List<Document> documentList = new LinkedList<Document>();
-        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,1)).skip(paginationCondition.getCurrentPage()*paginationCondition.getPageSize()).limit(paginationCondition.getPageSize()).iterator();
+        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,-1)).skip((paginationCondition.getCurrentPage()-1)*paginationCondition.getPageSize()).limit(paginationCondition.getPageSize()).iterator();
         try {
             while (cursor.hasNext()) {
                 documentList.add(cursor.next());
@@ -73,7 +82,7 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
             cursor.close();
         }
 
-        PaginationRepertory<Document> paginationRepertory = new PaginationRepertory<Document>(0, documentList, paginationCondition);
+        PaginationRepertory<Document> paginationRepertory = new PaginationRepertory<Document>(new Long(totalCount).intValue(), documentList, paginationCondition);
 
         return paginationRepertory;
     }
@@ -85,7 +94,7 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transUniqueId);
 
         List<Document> documentList = new LinkedList<Document>();
-        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,1)).iterator();
+        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,-1)).iterator();
         try {
             while (cursor.hasNext()) {
                 documentList.add(cursor.next());

@@ -1,6 +1,7 @@
 export class Transaction {
   startTimeBegin: string;
   startTimeEnd: string;
+  transType: string;
   userId: string;
   thread: string;
   transUniqueId: string;
