@@ -59,8 +59,8 @@ public class DarkKnightCollectionApplicationContext implements ApplicationContex
         Properties properties = null;
         InputStream in = null;
         try {
-//            String filePath = System.getProperty("user.dir")+"/CubeConfigure.properties";
-            String filePath = "/Users/Joly/Work/Joly/project/dark-knight/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.collection/src/main/resources/config/app/CubeConfigure.properties";
+            String filePath = System.getProperty("user.dir")+"/CubeConfigure.properties";
+//            String filePath = "/Users/Joly/Work/Joly/project/dark-knight/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.collection/src/main/resources/config/app/CubeConfigure.properties";
             in = new FileInputStream(new File(filePath));
             properties = new Properties();
             properties.load(in);

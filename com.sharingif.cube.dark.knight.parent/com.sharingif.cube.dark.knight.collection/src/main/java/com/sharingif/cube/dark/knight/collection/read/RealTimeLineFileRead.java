@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,20 +31,27 @@ public class RealTimeLineFileRead implements FileRead {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Override
-    public void read(String filePath) {
-
+    protected String changeFilePath(String filePath) {
         String currentDate = DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT);
-        filePath = filePath.substring(0,filePath.length()-4)+"."+currentDate+filePath.substring(filePath.length()-4,filePath.length());
+        return filePath.substring(0,filePath.length()-4)+"."+currentDate+filePath.substring(filePath.length()-4,filePath.length());
+    }
 
-        FileReader fileReader = null;
+    protected BufferedReader getBufferedReader(String filePath) {
         try {
-            fileReader = new FileReader(filePath);
+            FileReader fileReader = new FileReader(filePath);
+            return new BufferedReader(fileReader);
         } catch (FileNotFoundException e) {
             logger.error("No such file or directory", e);
             throw new CubeRuntimeException("No such file or directory");
         }
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+    }
+
+    @Override
+    public void read(String filePath) {
+
+        String changeFilePath = changeFilePath(filePath);
+        BufferedReader bufferedReader = getBufferedReader(changeFilePath);
+
         while(true) {
             String data;
             try {
@@ -62,7 +66,12 @@ public class RealTimeLineFileRead implements FileRead {
             }
 
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(5);
+                String newFilePath = changeFilePath(filePath);
+                File file = new File(newFilePath);
+                if(file.exists()) {
+                    bufferedReader = getBufferedReader(newFilePath);
+                }
             } catch (InterruptedException e) {
                 logger.error("Interrupted Exception", e);
                 throw new CubeRuntimeException("Interrupted Exception");

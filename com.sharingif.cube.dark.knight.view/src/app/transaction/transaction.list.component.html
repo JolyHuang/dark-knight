@@ -67,7 +67,7 @@
           <td>{{transaction.transId}}</td>
           <td>{{transaction.message}}</td>
           <td>{{transaction.startTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
-          <td><a routerLink="../transactionDetails/{{transaction.transUniqueId}}">详情</a></td>
+          <td><button class="btn btn-outline rounded b-accent text-accent" routerLink="../transactionDetails/{{transaction.transUniqueId}}">详情</button></td>
         </tr>
         </tbody>
         <tfoot class="hide-if-no-paging">

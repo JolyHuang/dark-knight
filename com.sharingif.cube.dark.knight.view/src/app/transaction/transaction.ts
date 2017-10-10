@@ -7,6 +7,7 @@ export class Transaction {
   threadId: string;
   method: string;
   transId: string;
+  info: string;
   transExcuteTime: string;
   message: string;
   localizedMessage: string;
