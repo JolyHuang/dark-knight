@@ -2,7 +2,7 @@
 <configuration scan="false" debug="false">
 
 	<property name="APP_NAME" value="collection" />
-	<property name="LOG_HOME" value="/home/opay/dark-knight/${APP_NAME}" />
+	<property name="LOG_HOME" value="/home/opay/dark-knight/${APP_NAME}/logs" />
 
 	<contextName>${APP_NAME}</contextName>
 
