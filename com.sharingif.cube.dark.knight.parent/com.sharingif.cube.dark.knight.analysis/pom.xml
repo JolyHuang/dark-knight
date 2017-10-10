@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>${maven.cube.groupId}</groupId>
+            <artifactId>com.sharingif.cube.persistence</artifactId>
+            <version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
+        </dependency>
+        <dependency>
             <groupId>${maven.cube.boot.groupId}</groupId>
             <artifactId>com.sharingif.cube.spring.boot.web.vert.x</artifactId>
             <version>${maven.project.com.sharingif.cube.spring.boot.version}</version>
