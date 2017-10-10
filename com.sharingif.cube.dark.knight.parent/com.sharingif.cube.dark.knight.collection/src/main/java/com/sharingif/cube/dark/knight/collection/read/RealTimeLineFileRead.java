@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RealTimeLineFileRead implements FileRead {
 
+    private String currentProcessData;
+
     private DataHandler dataHandler;
 
     @Resource(name="compositeDataHandler")
@@ -33,6 +35,7 @@ public class RealTimeLineFileRead implements FileRead {
 
     protected String changeFilePath(String filePath) {
         String currentDate = DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT);
+        currentProcessData = currentDate;
         return filePath.substring(0,filePath.length()-4)+"."+currentDate+filePath.substring(filePath.length()-4,filePath.length());
     }
 
@@ -67,9 +70,8 @@ public class RealTimeLineFileRead implements FileRead {
 
             try {
                 TimeUnit.SECONDS.sleep(5);
-                String newFilePath = changeFilePath(filePath);
-                File file = new File(newFilePath);
-                if(file.exists()) {
+                if(!DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT).equals(currentProcessData)) {
+                    String newFilePath = changeFilePath(filePath);
                     bufferedReader = getBufferedReader(newFilePath);
                 }
             } catch (InterruptedException e) {
