@@ -3,6 +3,7 @@ package com.sharingif.cube.dark.knight.collection.read;
 import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.collection.handler.DataHandler;
+import com.sharingif.cube.dark.knight.collection.handler.TransactionErrorDataHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * 实时行读取
@@ -23,12 +25,20 @@ import java.util.concurrent.TimeUnit;
 public class RealTimeLineFileRead implements FileRead {
 
     private String currentProcessData;
+    private boolean errorDataFlag = false;
+    private StringBuilder errorData = null;
 
     private DataHandler dataHandler;
+    private TransactionErrorDataHandler transactionErrorDataHandler;
+
 
     @Resource(name="compositeDataHandler")
     public void setDataHandler(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
+    }
+    @Resource
+    public void setTransactionErrorDataHandler(TransactionErrorDataHandler transactionErrorDataHandler) {
+        this.transactionErrorDataHandler = transactionErrorDataHandler;
     }
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -49,6 +59,20 @@ public class RealTimeLineFileRead implements FileRead {
         }
     }
 
+    protected Pattern getErrorCausePattern() {
+        return Pattern.compile("^.{4}-.{2}-.{2}");
+    }
+
+    protected boolean canHandleErrorData(String data) {
+        if(getErrorCausePattern().matcher(data).matches()) {
+            errorData.append("\n").append(data);
+            return true;
+        } else {
+            errorDataFlag = false;
+            return false;
+        }
+    }
+
     @Override
     public void read(String filePath) {
 
@@ -59,8 +83,23 @@ public class RealTimeLineFileRead implements FileRead {
             String data;
             try {
                 while((data = bufferedReader.readLine()) != null){
+
+                    if(errorDataFlag) {
+                        boolean handlerFlag = canHandleErrorData(data);
+                        if(handlerFlag) {
+                            continue;
+                        }
+                    }
+
+                    if(transactionErrorDataHandler.isMatch(data)) {
+                        errorDataFlag = true;
+                        errorData = new StringBuilder(data);
+                        errorData.append(", errorCause:");
+                        continue;
+                    }
+
                     if(dataHandler.isMatch(data)) {
-                        dataHandler.handle(data, bufferedReader);
+                        dataHandler.handle(data);
                     }
                 }
             } catch (IOException e) {
@@ -73,6 +112,7 @@ public class RealTimeLineFileRead implements FileRead {
                 if(!DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT).equals(currentProcessData)) {
                     String newFilePath = changeFilePath(filePath);
                     bufferedReader = getBufferedReader(newFilePath);
+                    errorDataFlag = false;
                 }
             } catch (InterruptedException e) {
                 logger.error("Interrupted Exception", e);

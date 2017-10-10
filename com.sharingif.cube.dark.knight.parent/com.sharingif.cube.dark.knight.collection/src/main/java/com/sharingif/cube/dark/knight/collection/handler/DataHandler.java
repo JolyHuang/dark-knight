@@ -23,9 +23,8 @@ public interface DataHandler {
     /**
      * 数据加工
      * @param data
-     * @param bufferedReader
      * @return
      */
-    LinkedHashMap<String, Object> handle(String data, BufferedReader bufferedReader);
+    LinkedHashMap<String, Object> handle(String data);
 
 }

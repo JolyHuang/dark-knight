@@ -3,7 +3,6 @@ package com.sharingif.cube.dark.knight.collection.handler;
 import com.sharingif.cube.core.util.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
@@ -45,8 +44,8 @@ public class TransactionInfoDataHandler extends AbstractDataHandler {
     }
 
     @Override
-    public LinkedHashMap<String, Object> handle(String data, BufferedReader bufferedReader) {
-        LinkedHashMap<String, Object> dataMap = super.handle(data, bufferedReader);
+    public LinkedHashMap<String, Object> handle(String data) {
+        LinkedHashMap<String, Object> dataMap = super.handle(data);
         if(StringUtils.isTrimEmpty((String)dataMap.get("transUniqueId"))) {
             return null;
         }

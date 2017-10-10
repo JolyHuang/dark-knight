@@ -4,7 +4,6 @@ import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplication
 import com.sharingif.cube.dark.knight.collection.write.DataWrite;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.util.LinkedHashMap;
 
 /**
@@ -24,11 +23,11 @@ public class CompositeDataHandler implements DataHandler {
     }
 
     @Override
-    public LinkedHashMap<String, Object> handle(String data, BufferedReader bufferedReader) {
+    public LinkedHashMap<String, Object> handle(String data) {
 
         for(DataHandler dataHandler : DarkKnightCollectionApplicationContext.DATA_HANDLER_LIST) {
             if(dataHandler.isMatch(data)) {
-                LinkedHashMap<String, Object> dataMap = dataHandler.handle(data, bufferedReader);
+                LinkedHashMap<String, Object> dataMap = dataHandler.handle(data);
 
                 if(dataMap != null) {
                     write(dataMap);

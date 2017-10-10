@@ -2,7 +2,6 @@ package com.sharingif.cube.dark.knight.collection.handler;
 
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +42,7 @@ public class StartedBootstrapDataHandler extends AbstractDataHandler {
     }
 
     @Override
-    public LinkedHashMap<String, Object> handle(String data, BufferedReader bufferedReader) {
+    public LinkedHashMap<String, Object> handle(String data) {
         Matcher matcher = getFindPattern().matcher(data);
 
         GroupData[] groupDataArray = getGroupIndexArray();
