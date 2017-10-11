@@ -4,6 +4,7 @@ import com.sharingif.cube.core.handler.bind.annotation.PathVariable;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
@@ -33,12 +34,17 @@ public class TransactionController {
     }
 
     @RequestMapping(value="list", method= RequestMethod.POST)
-    public PaginationRepertory<Document> getList(PaginationCondition<Transaction> paginationCondition) {
+    public PaginationRepertory<Document> list(PaginationCondition<Transaction> paginationCondition) {
         return transactionService.getList(paginationCondition);
     }
 
     @RequestMapping(value="details/{transUniqueId}", method= RequestMethod.GET)
     public List<Document> details(@PathVariable("transUniqueId") String transUniqueId) {
         return transactionService.getDetailsByTransUniqueId(transUniqueId);
+    }
+
+    @RequestMapping(value="volume/day", method= RequestMethod.GET)
+    public TransactionVolumeDay volumeDay() {
+        return transactionService.getTransactionVolumeDay();
     }
 }

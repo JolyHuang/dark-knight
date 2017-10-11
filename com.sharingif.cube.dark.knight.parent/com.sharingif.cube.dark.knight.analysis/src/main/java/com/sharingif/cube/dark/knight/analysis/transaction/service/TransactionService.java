@@ -1,6 +1,7 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.service;
 
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
@@ -20,5 +21,7 @@ public interface TransactionService {
     PaginationRepertory<Document> getList(PaginationCondition<Transaction> paginationCondition);
 
     List<Document> getDetailsByTransUniqueId(String transUniqueId);
+
+    TransactionVolumeDay getTransactionVolumeDay();
 
 }

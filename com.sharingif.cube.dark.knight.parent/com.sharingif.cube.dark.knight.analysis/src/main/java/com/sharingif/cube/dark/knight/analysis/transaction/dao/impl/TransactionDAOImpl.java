@@ -106,4 +106,28 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         return documentList;
     }
 
+    @Override
+    public Long queryCount(Transaction transaction) {
+
+        BasicDBObject filter = new BasicDBObject();
+
+        if(!StringUtils.isTrimEmpty(transaction.getTransType())) {
+            filter.put(Transaction.TRANS_TYPE_KEY, transaction.getTransType());
+        }
+
+        BasicDBObject startTime = new BasicDBObject();
+        if(transaction.getStartTimeBegin() != null) {
+            filter.put(Transaction.START_TIME_KEY, startTime.append("$gte", transaction.getStartTimeBegin()));
+
+            if(transaction.getStartTimeEnd() != null) {
+                startTime.append("$lt", transaction.getStartTimeEnd());
+            }
+        }
+        if((transaction.getStartTimeBegin() == null) && (transaction.getStartTimeEnd() != null)) {
+            filter.put(Transaction.START_TIME_KEY, startTime.append("$lt", transaction.getStartTimeEnd()));
+        }
+
+        return getCollection().count(filter);
+    }
+
 }

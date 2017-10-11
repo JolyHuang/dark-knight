@@ -1,4 +1,47 @@
 <div class="padding">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <div class="box p-a">
+        <div class="pull-left m-r">
+	            <span class="w-48 rounded  accent">
+	              <i class="material-icons">&#xe151;</i>
+	            </span>
+        </div>
+        <div class="clear">
+          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.total}} <span class="text-sm">总交易量</span></a></h4>
+          <small class="text-muted">{{transactionVolumeDay.date | date:"yyyy-MM-dd"}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="box p-a">
+        <div class="pull-left m-r">
+	            <span class="w-48 rounded primary">
+	              <i class="material-icons">&#xe54f;</i>
+	            </span>
+        </div>
+        <div class="clear">
+          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.success}} <span class="text-sm">成功交易</span></a></h4>
+          <small class="text-muted">{{transactionVolumeDay.date | date:"yyyy-MM-dd"}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="box p-a">
+        <div class="pull-left m-r">
+	            <span class="w-48 rounded warn">
+	              <i class="material-icons">&#xe8d3;</i>
+	            </span>
+        </div>
+        <div class="clear">
+          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.fail}} <span class="text-sm">失败交易</span></a></h4>
+          <small class="text-muted">{{transactionVolumeDay.date | date:"yyyy-MM-dd"}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="box p-a">

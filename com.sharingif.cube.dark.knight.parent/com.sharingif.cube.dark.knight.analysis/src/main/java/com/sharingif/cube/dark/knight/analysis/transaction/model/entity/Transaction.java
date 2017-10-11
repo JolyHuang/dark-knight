@@ -15,6 +15,7 @@ import java.util.Date;
 public class Transaction {
 
     public static final String TRANSACTION_BEGIN = "transactionBegin";
+    public static final String TRANSACTION_ERROR ="transactionError";
 
     public static final String TRANS_TYPE_KEY = "transType";
     public static final String TRANS_ID_KEY = "transId";

@@ -21,4 +21,6 @@ public interface TransactionDAO {
 
     List<Document> queryList(String transUniqueId);
 
+    Long queryCount(Transaction transaction);
+
 }
