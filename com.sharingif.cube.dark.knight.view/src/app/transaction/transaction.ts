@@ -1,4 +1,6 @@
 export class Transaction {
+  serverIp: string;
+  serverName: string;
   startTimeBegin: string;
   startTimeEnd: string;
   transType: string;
