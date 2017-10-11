@@ -25,7 +25,7 @@ export class TransactionDetailsComponent implements OnInit {
   queryDetail() : void {
 
     this.http
-      .get('http://127.0.0.1:8080/dark-knight-analysis/transaction/details/'+this.transUniqueId, {headers})
+      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/details/'+this.transUniqueId, {headers})
       .subscribe(
         res => {
           this.transactionList = res["_data"];

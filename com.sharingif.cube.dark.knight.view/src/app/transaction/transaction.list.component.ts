@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
+
 import { PaginationCondition } from '../pagination/pagination.condition';
 import { PaginationRepertory } from '../pagination/pagination.repertory';
 import { Transaction } from './transaction';
@@ -37,7 +38,7 @@ export class TransactionListComponent implements OnInit {
     this.paginationCondition.condition = this.trans;
 
     this.http
-      .post('http://127.0.0.1:8080/dark-knight-analysis/transaction/list', this.paginationCondition,{headers})
+      .post('http://127.0.0.1:9300/dark-knight-analysis/transaction/list', this.paginationCondition,{headers})
       .subscribe(
         res => {
           this.paginationRepertory = res["_data"];

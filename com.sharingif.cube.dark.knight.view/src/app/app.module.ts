@@ -5,6 +5,8 @@ import { FormsModule }   from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
+import { HttpJsonService } from './http/http.json.service';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar.component';
 import { HeaderComponent } from './header.component';
@@ -55,7 +57,7 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [HttpJsonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

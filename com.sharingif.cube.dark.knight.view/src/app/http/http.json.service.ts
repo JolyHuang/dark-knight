@@ -15,7 +15,7 @@ export class HttpJsonService {
   port: number = 9300;
   address: string;
   useHttps: boolean;
-  contextPath: string;
+  contextPath: string = "dark-knight-analysis";
 
 
   getUrlPrefix(): string {
@@ -34,7 +34,7 @@ export class HttpJsonService {
     }
   }
 
-  get(url: string): any {
+  get(url: string, success: object, failure: object): any {
     this.http
       .get(this.getUrlPrefix()+url, {headers})
       .subscribe(

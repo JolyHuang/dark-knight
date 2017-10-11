@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.http
-      .get('http://127.0.0.1:8080/dark-knight-analysis/transaction/volume/day', {headers})
+      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/volume/day', {headers})
       .subscribe(
         res => {
           this.transactionVolumeDay = res["_data"];
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
         });
 
     this.http
-      .get('http://127.0.0.1:8080/dark-knight-analysis/transaction/day', {headers})
+      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/day', {headers})
       .subscribe(
         res => {
           this.transactionDay = res["_data"];
