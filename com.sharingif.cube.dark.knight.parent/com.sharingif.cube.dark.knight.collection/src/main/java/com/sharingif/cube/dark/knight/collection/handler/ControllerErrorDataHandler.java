@@ -22,7 +22,7 @@ public class ControllerErrorDataHandler extends TransactionErrorDataHandler {
 
     @Override
     protected Pattern getMathPattern() {
-        return Pattern.compile("(.*)controller error===>(.*)");
+        return Pattern.compile("(.*)controller error===>([\\s\\S]*)");
     }
 
 }

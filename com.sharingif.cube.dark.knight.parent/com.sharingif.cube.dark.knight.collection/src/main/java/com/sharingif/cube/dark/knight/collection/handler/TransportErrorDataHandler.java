@@ -22,7 +22,7 @@ public class TransportErrorDataHandler extends TransactionErrorDataHandler {
 
     @Override
     protected Pattern getMathPattern() {
-        return Pattern.compile("(.*)Transport error===>(.*)");
+        return Pattern.compile("(.*)Transport error===>([\\s\\S]*)");
     }
 
 }

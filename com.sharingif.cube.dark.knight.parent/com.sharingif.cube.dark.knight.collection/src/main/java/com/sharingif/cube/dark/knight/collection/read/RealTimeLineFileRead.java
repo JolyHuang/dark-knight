@@ -29,16 +29,11 @@ public class RealTimeLineFileRead implements FileRead {
     private StringBuilder errorData = null;
 
     private DataHandler dataHandler;
-    private TransactionErrorDataHandler transactionErrorDataHandler;
 
 
     @Resource(name="compositeDataHandler")
     public void setDataHandler(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
-    }
-    @Resource
-    public void setTransactionErrorDataHandler(TransactionErrorDataHandler transactionErrorDataHandler) {
-        this.transactionErrorDataHandler = transactionErrorDataHandler;
     }
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -59,15 +54,23 @@ public class RealTimeLineFileRead implements FileRead {
         }
     }
 
+    protected Pattern getErrorMathPattern() {
+        return Pattern.compile("(.*) error===>(.*)");
+    }
+
     protected Pattern getErrorCausePattern() {
-        return Pattern.compile("^.{4}-.{2}-.{2}");
+        return Pattern.compile("^.{4}-.{2}-.{2}(.*)");
     }
 
     protected boolean canHandleErrorData(String data) {
-        if(getErrorCausePattern().matcher(data).matches()) {
+        if(!getErrorCausePattern().matcher(data).matches()) {
             errorData.append("\n").append(data);
             return true;
         } else {
+            String errorDataStr = errorData.toString();
+            if(dataHandler.isMatch(errorDataStr)) {
+                dataHandler.handle(errorDataStr);
+            }
             errorDataFlag = false;
             return false;
         }
@@ -91,7 +94,7 @@ public class RealTimeLineFileRead implements FileRead {
                         }
                     }
 
-                    if(transactionErrorDataHandler.isMatch(data)) {
+                    if(getErrorMathPattern().matcher(data).matches()) {
                         errorDataFlag = true;
                         errorData = new StringBuilder(data);
                         errorData.append(", errorCause:");
@@ -112,7 +115,6 @@ public class RealTimeLineFileRead implements FileRead {
                 if(!DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT).equals(currentProcessData)) {
                     String newFilePath = changeFilePath(filePath);
                     bufferedReader = getBufferedReader(newFilePath);
-                    errorDataFlag = false;
                 }
             } catch (InterruptedException e) {
                 logger.error("Interrupted Exception", e);

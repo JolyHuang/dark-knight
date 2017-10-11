@@ -25,12 +25,12 @@ public class TransactionErrorDataHandler extends AbstractDataHandler {
 
     @Override
     protected Pattern getMathPattern() {
-        return Pattern.compile("(.*)transaction error===>(.*)");
+        return Pattern.compile("(.*)transaction error===>([\\s\\S]*)");
     }
 
     @Override
     protected Pattern getFindPattern() {
-        return Pattern.compile("(.{23}) \\[(.*)\\] \\[(.*)\\] ERROR \\[(.*)\\] (.*)thdId:(.*), method:(.*), trsId:(.*), exTime:(.*), message:(.*), localizedMessage:(.*), errorCause:(.*)");
+        return Pattern.compile("(.{23}) \\[(.*)\\] \\[(.*)\\] ERROR \\[(.*)\\] (.*)thdId:(.*), method:(.*), trsId:(.*), exTime:(.*), message:(.*), localizedMessage:(.*), errorCause:([\\s\\S]*)");
     }
 
     protected Pattern getErrorCausePattern() {
