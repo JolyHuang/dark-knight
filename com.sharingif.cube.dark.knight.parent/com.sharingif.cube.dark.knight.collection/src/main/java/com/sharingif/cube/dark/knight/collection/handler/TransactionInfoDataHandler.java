@@ -23,12 +23,12 @@ public class TransactionInfoDataHandler extends AbstractDataHandler {
 
     @Override
     protected Pattern getMathPattern() {
-        return Pattern.compile("(.*) \\[(.*)\\] INFO  \\[(.*)\\]");
+        return Pattern.compile("(.*) \\[(.*)\\] INFO  \\[(.*)\\] (.*)");
     }
 
     @Override
     protected Pattern getFindPattern() {
-        return Pattern.compile("(.{23}) \\[(.*)\\] \\[(.*)\\] INFO  \\[(.*)\\] (.*) - ([\\s\\S]*)");
+        return Pattern.compile("(.{23}) \\[(.*)\\] \\[(.*)\\] INFO  \\[(.*)\\] (.*) - (.*)");
     }
 
     @Override
