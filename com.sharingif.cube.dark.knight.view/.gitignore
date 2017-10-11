@@ -16,6 +16,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+*.iml
 
 # IDE - VSCode
 .vscode/*
@@ -40,9 +41,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-.gitignore
-.DS_Store
-target
-*.iml
-.idea
