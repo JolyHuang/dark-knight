@@ -4,6 +4,7 @@ import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
@@ -80,6 +81,54 @@ public class TransactionServiceImpl implements TransactionService {
         transactionVolumeDay.setFail(error);
 
         return transactionVolumeDay;
+    }
+
+    @Override
+    public TransactionDay getTransactionDay() {
+
+        Date currentDate = new Date();
+        String currentDateString = DateUtils.getDate(currentDate, DateUtils.DATE_ISO_FORMAT);
+        Date currentDateBegin = null;
+        Date currentDateEnd = null;
+        try {
+            currentDateBegin = DateUtils.getDate(currentDateString+" 00:00:00", DateUtils.DATETIME_ISO_FORMAT);
+            currentDateEnd = DateUtils.getDate(currentDateString+" 23:59:59", DateUtils.DATETIME_ISO_FORMAT);
+        } catch (ParseException e) {
+            throw new CubeRuntimeException("data fromart error", e);
+        }
+
+        Transaction registerTransaction = new Transaction();
+        registerTransaction.setStartTimeBegin(currentDateBegin);
+        registerTransaction.setStartTimeEnd(currentDateEnd);
+        registerTransaction.setTransId(Transaction.REGISTER);
+        long register = transactionDAO.queryCount(registerTransaction);
+
+        Transaction rechargeSubmitTransaction = new Transaction();
+        rechargeSubmitTransaction.setStartTimeBegin(currentDateBegin);
+        rechargeSubmitTransaction.setStartTimeEnd(currentDateEnd);
+        rechargeSubmitTransaction.setTransId(Transaction.RECHARGE_SUBMIT);
+        long rechargeSubmit = transactionDAO.queryCount(rechargeSubmitTransaction);
+
+        Transaction withdrawSubmitTransaction = new Transaction();
+        withdrawSubmitTransaction.setStartTimeBegin(currentDateBegin);
+        withdrawSubmitTransaction.setStartTimeEnd(currentDateEnd);
+        withdrawSubmitTransaction.setTransId(Transaction.WITHDRAW_SUBMIT);
+        long withdrawSubmit = transactionDAO.queryCount(withdrawSubmitTransaction);
+
+        Transaction loanApplyTransaction = new Transaction();
+        loanApplyTransaction.setStartTimeBegin(currentDateBegin);
+        loanApplyTransaction.setStartTimeEnd(currentDateEnd);
+        loanApplyTransaction.setTransId(Transaction.LOAN_APPLY);
+        long loanApply = transactionDAO.queryCount(loanApplyTransaction);
+
+        TransactionDay transactionDay = new TransactionDay();
+        transactionDay.setDate(currentDate);
+        transactionDay.setRegister(register);
+        transactionDay.setRechargeSubmit(rechargeSubmit);
+        transactionDay.setWithdrawSubmit(withdrawSubmit);
+        transactionDay.setLoanApply(loanApply);
+
+        return transactionDay;
     }
 
 }

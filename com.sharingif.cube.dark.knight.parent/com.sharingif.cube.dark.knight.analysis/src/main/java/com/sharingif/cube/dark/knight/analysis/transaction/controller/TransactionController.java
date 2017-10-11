@@ -4,6 +4,7 @@ import com.sharingif.cube.core.handler.bind.annotation.PathVariable;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
@@ -46,5 +47,10 @@ public class TransactionController {
     @RequestMapping(value="volume/day", method= RequestMethod.GET)
     public TransactionVolumeDay volumeDay() {
         return transactionService.getTransactionVolumeDay();
+    }
+
+    @RequestMapping(value="day", method= RequestMethod.GET)
+    public TransactionDay day() {
+        return transactionService.getTransactionDay();
     }
 }

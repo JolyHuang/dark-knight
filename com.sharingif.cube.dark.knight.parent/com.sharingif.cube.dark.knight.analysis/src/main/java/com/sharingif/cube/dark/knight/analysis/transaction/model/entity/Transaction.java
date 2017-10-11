@@ -17,6 +17,11 @@ public class Transaction {
     public static final String TRANSACTION_BEGIN = "transactionBegin";
     public static final String TRANSACTION_ERROR ="transactionError";
 
+    public static final String REGISTER = "/api/register";
+    public static final String RECHARGE_SUBMIT = "/api/rechargeSubmit";
+    public static final String WITHDRAW_SUBMIT = "/api/withdrawSubmit";
+    public static final String LOAN_APPLY = "/api/loanApply";
+
     public static final String TRANS_TYPE_KEY = "transType";
     public static final String TRANS_ID_KEY = "transId";
     public static final String MESSAGE_KEY = "message";

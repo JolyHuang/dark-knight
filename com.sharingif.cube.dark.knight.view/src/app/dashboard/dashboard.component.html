@@ -9,8 +9,8 @@
 	            </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.total}} <span class="text-sm">总交易量</span></a></h4>
-          <small class="text-muted">{{transactionVolumeDay.date | date:"yyyy-MM-dd"}}</small>
+          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.total}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日总交易量</small>
         </div>
       </div>
     </div>
@@ -22,8 +22,8 @@
 	            </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.success}} <span class="text-sm">成功交易</span></a></h4>
-          <small class="text-muted">{{transactionVolumeDay.date | date:"yyyy-MM-dd"}}</small>
+          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.success}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日成功交易量</small>
         </div>
       </div>
     </div>
@@ -35,8 +35,8 @@
 	            </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.fail}} <span class="text-sm">失败交易</span></a></h4>
-          <small class="text-muted">{{transactionVolumeDay.date | date:"yyyy-MM-dd"}}</small>
+          <h4 class="m-0 text-lg _300"><a href>{{transactionVolumeDay.fail}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日失败交易量</small>
         </div>
       </div>
     </div>
@@ -51,8 +51,8 @@
             </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-md"><a href>75 <span class="text-sm">Sales</span></a></h4>
-          <small class="text-muted">6 waiting payment.</small>
+          <h4 class="m-0 text-md"><a href>{{transactionDay.register}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日注册用户数</small>
         </div>
       </div>
     </div>
@@ -64,8 +64,8 @@
             </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-md"><a href>40 <span class="text-sm">Orders</span></a></h4>
-          <small class="text-muted">38 Shipped.</small>
+          <h4 class="m-0 text-md"><a href>{{transactionDay.rechargeSubmit}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日充值确认次数</small>
         </div>
       </div>
     </div>
@@ -77,8 +77,8 @@
             </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-md"><a href>6,000 <span class="text-sm">Members</span></a></h4>
-          <small class="text-muted">632 activities post.</small>
+          <h4 class="m-0 text-md"><a href>{{transactionDay.withdrawSubmit}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日提现确认次数</small>
         </div>
       </div>
     </div>
@@ -90,8 +90,8 @@
             </span>
         </div>
         <div class="clear">
-          <h4 class="m-0 text-md"><a href>69 <span class="text-sm">Comments</span></a></h4>
-          <small class="text-muted">5 approved.</small>
+          <h4 class="m-0 text-md"><a href>{{transactionDay.loanApply}} <span class="text-sm"></span></a></h4>
+          <small class="text-muted">当日贷款申请次数</small>
         </div>
       </div>
     </div>
@@ -140,6 +140,7 @@
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="box">

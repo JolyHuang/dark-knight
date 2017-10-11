@@ -115,6 +115,10 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
             filter.put(Transaction.TRANS_TYPE_KEY, transaction.getTransType());
         }
 
+        if(!StringUtils.isTrimEmpty(transaction.getTransId())) {
+            filter.put(Transaction.TRANS_ID_KEY, transaction.getTransId());
+        }
+
         BasicDBObject startTime = new BasicDBObject();
         if(transaction.getStartTimeBegin() != null) {
             filter.put(Transaction.START_TIME_KEY, startTime.append("$gte", transaction.getStartTimeBegin()));
