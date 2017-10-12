@@ -5,6 +5,8 @@ import { FormsModule }   from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { HttpJsonService } from './http/http.json.service';
 
 import { AppComponent } from './app.component';
@@ -52,6 +54,7 @@ const appRoutes: Routes = [
     NgDatepickerModule,
     FormsModule,
     HttpClientModule,
+    ChartsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only

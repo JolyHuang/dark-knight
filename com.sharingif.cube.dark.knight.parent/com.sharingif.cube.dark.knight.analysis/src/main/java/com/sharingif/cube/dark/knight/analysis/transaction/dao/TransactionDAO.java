@@ -1,10 +1,12 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.dao;
 
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,5 +24,7 @@ public interface TransactionDAO {
     List<Document> queryList(String transUniqueId);
 
     Long queryCount(Transaction transaction);
+
+    List<TransactionDateTimeStatistics> statisticsByDayHour(Transaction transaction);
 
 }

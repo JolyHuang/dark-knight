@@ -3,17 +3,18 @@ package com.sharingif.cube.dark.knight.analysis.transaction.dao.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.*;
 import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.dark.knight.analysis.app.dao.impl.CubeMongoDBDAOImpl;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
 import org.springframework.stereotype.Repository;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 查询交易信息
@@ -132,6 +133,34 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         }
 
         return getCollection().count(filter);
+    }
+
+    @Override
+    public List<TransactionDateTimeStatistics> statisticsByDayHour(Transaction transaction) {
+
+        MongoCursor<Document> cursor = getCollection().aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.and(Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin()),Aggregates.match(Filters.gte(Transaction.TRANS_TYPE_KEY, transaction.getTransType())))),
+                        Aggregates.project(Projections.computed("hour", new BasicDBObject("$hour", "$"+Transaction.START_TIME_KEY))),
+                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                        Aggregates.sort(Sorts.orderBy(Sorts.ascending("_id")))
+                )
+        ).iterator();
+        List<TransactionDateTimeStatistics> documentList = new LinkedList<TransactionDateTimeStatistics>();
+        try {
+            while (cursor.hasNext()) {
+                Document document = cursor.next();
+                TransactionDateTimeStatistics transactionDateTimeStatistics = new TransactionDateTimeStatistics();
+                transactionDateTimeStatistics.setHour(document.getInteger("_id"));
+                transactionDateTimeStatistics.setCount(document.getInteger("count"));
+
+                documentList.add(transactionDateTimeStatistics);
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return documentList;
     }
 
 }

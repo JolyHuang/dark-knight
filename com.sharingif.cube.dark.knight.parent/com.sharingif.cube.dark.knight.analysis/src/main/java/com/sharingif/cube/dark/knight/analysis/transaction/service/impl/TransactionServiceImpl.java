@@ -4,6 +4,7 @@ import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
@@ -129,6 +130,23 @@ public class TransactionServiceImpl implements TransactionService {
         transactionDay.setLoanApply(loanApply);
 
         return transactionDay;
+    }
+
+    @Override
+    public List<TransactionDateTimeStatistics> statisticsByDayHour() {
+
+        try {
+            Date currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
+
+            Transaction transaction = new Transaction();
+            transaction.setStartTimeBegin(currentDate);
+            transaction.setTransType(Transaction.TRANSACTION_BEGIN);
+
+            return transactionDAO.statisticsByDayHour(transaction);
+        } catch (ParseException e) {
+            throw new CubeRuntimeException("data fromart error", e);
+        }
+
     }
 
 }
