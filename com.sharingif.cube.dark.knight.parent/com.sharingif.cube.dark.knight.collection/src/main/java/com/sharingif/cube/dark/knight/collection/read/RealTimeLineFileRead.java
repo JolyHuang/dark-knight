@@ -3,7 +3,6 @@ package com.sharingif.cube.dark.knight.collection.read;
 import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.collection.handler.DataHandler;
-import com.sharingif.cube.dark.knight.collection.handler.TransactionErrorDataHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,8 +39,14 @@ public class RealTimeLineFileRead implements FileRead {
 
     protected String changeFilePath(String filePath) {
         String currentDate = DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT);
-        currentProcessData = currentDate;
-        return filePath.substring(0,filePath.length()-4)+"."+currentDate+filePath.substring(filePath.length()-4,filePath.length());
+
+        String newFilePath = filePath.substring(0,filePath.length()-4)+"."+currentDate+filePath.substring(filePath.length()-4,filePath.length());
+
+        File newFile = new File(newFilePath);
+        if(newFile.exists()) {
+            currentProcessData = currentDate;
+        }
+        return newFilePath;
     }
 
     protected BufferedReader getBufferedReader(String filePath) {
@@ -114,7 +119,10 @@ public class RealTimeLineFileRead implements FileRead {
                 TimeUnit.SECONDS.sleep(5);
                 if(!DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT).equals(currentProcessData)) {
                     String newFilePath = changeFilePath(filePath);
-                    bufferedReader = getBufferedReader(newFilePath);
+                    File newFile = new File(newFilePath);
+                    if(newFile.exists()) {
+                        bufferedReader = getBufferedReader(newFilePath);
+                    }
                 }
             } catch (InterruptedException e) {
                 logger.error("Interrupted Exception", e);
