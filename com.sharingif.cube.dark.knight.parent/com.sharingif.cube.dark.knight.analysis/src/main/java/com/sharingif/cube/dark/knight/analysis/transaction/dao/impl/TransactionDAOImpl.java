@@ -140,7 +140,10 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
 
         MongoCursor<Document> cursor = getCollection().aggregate(
                 Arrays.asList(
-                        Aggregates.match(Filters.and(Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin()),Aggregates.match(Filters.gte(Transaction.TRANS_TYPE_KEY, transaction.getTransType())))),
+                        Aggregates.match(Filters.and(
+                                Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin())
+                                ,Filters.eq(Transaction.TRANS_TYPE_KEY, transaction.getTransType())
+                        )),
                         Aggregates.project(Projections.computed("hour", new BasicDBObject("$hour", "$"+Transaction.START_TIME_KEY))),
                         Aggregates.group("$hour", Accumulators.sum("count", 1)),
                         Aggregates.sort(Sorts.orderBy(Sorts.ascending("_id")))
