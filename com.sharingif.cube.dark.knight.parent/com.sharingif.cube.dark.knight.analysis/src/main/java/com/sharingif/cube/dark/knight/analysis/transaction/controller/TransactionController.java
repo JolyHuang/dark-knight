@@ -3,10 +3,7 @@ package com.sharingif.cube.dark.knight.analysis.transaction.controller;
 import com.sharingif.cube.core.handler.bind.annotation.PathVariable;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDay;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.*;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
@@ -58,5 +55,10 @@ public class TransactionController {
     @RequestMapping(value="statistics/day/hour", method= RequestMethod.GET)
     public List<TransactionDateTimeStatistics> statisticsByDayHour() {
         return transactionService.statisticsByDayHour();
+    }
+
+    @RequestMapping(value="statistics/day/transId", method= RequestMethod.GET)
+    public List<TransactionStatistics> statisticsByTransId() {
+        return transactionService.statisticsByTransId();
     }
 }

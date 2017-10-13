@@ -3,10 +3,7 @@ package com.sharingif.cube.dark.knight.analysis.transaction.service.impl;
 import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDay;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.*;
 import com.sharingif.cube.dark.knight.analysis.transaction.service.TransactionService;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -135,18 +133,51 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<TransactionDateTimeStatistics> statisticsByDayHour() {
 
+        Date currentDate = null;
         try {
-            Date currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
-
-            Transaction transaction = new Transaction();
-            transaction.setStartTimeBegin(currentDate);
-            transaction.setTransType(Transaction.TRANSACTION_BEGIN);
-
-            return transactionDAO.statisticsByDayHour(transaction);
+            currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
         } catch (ParseException e) {
             throw new CubeRuntimeException("data fromart error", e);
         }
+        Transaction transaction = new Transaction();
+        transaction.setStartTimeBegin(currentDate);
+        transaction.setTransType(Transaction.TRANSACTION_BEGIN);
 
+        List<TransactionDateTimeStatistics> transactionDateTimeStatisticsList = transactionDAO.statisticsByDayHour(transaction);
+        if(transactionDateTimeStatisticsList.size()<24) {
+            List<TransactionDateTimeStatistics> fullTransactionDateTimeStatisticsList = new ArrayList<TransactionDateTimeStatistics>(24);
+            for(int i = 0; i<24; i++) {
+                TransactionDateTimeStatistics transactionDateTimeStatistics = new TransactionDateTimeStatistics();
+                transactionDateTimeStatistics.setHour(i);
+                transactionDateTimeStatistics.setCount(0);
+                fullTransactionDateTimeStatisticsList.add(transactionDateTimeStatistics);
+            }
+
+            for(TransactionDateTimeStatistics transactionDateTimeStatistics : transactionDateTimeStatisticsList) {
+                fullTransactionDateTimeStatisticsList.get(transactionDateTimeStatistics.getHour()).setCount(transactionDateTimeStatistics.getCount());
+            }
+
+            return fullTransactionDateTimeStatisticsList;
+        }
+
+        return transactionDateTimeStatisticsList;
+
+    }
+
+    @Override
+    public List<TransactionStatistics> statisticsByTransId() {
+
+        Date currentDate = null;
+        try {
+            currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
+        } catch (ParseException e) {
+            throw new CubeRuntimeException("data fromart error", e);
+        }
+        Transaction transaction = new Transaction();
+        transaction.setStartTimeBegin(currentDate);
+        transaction.setTransType(Transaction.TRANSACTION_BEGIN);
+
+        return transactionDAO.statisticsByTransId(transaction);
     }
 
 }

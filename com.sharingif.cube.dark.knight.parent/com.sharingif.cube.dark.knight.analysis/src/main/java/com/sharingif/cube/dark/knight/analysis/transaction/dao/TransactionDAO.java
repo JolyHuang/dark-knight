@@ -2,6 +2,7 @@ package com.sharingif.cube.dark.knight.analysis.transaction.dao;
 
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionStatistics;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
@@ -26,5 +27,7 @@ public interface TransactionDAO {
     Long queryCount(Transaction transaction);
 
     List<TransactionDateTimeStatistics> statisticsByDayHour(Transaction transaction);
+
+    List<TransactionStatistics> statisticsByTransId(Transaction transaction);
 
 }

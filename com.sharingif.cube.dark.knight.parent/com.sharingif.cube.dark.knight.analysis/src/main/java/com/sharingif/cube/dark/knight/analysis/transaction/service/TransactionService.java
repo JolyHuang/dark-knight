@@ -1,9 +1,6 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.service;
 
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDay;
-import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionVolumeDay;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.*;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
@@ -30,5 +27,7 @@ public interface TransactionService {
     TransactionDay getTransactionDay();
 
     List<TransactionDateTimeStatistics> statisticsByDayHour();
+
+    List<TransactionStatistics> statisticsByTransId();
 
 }

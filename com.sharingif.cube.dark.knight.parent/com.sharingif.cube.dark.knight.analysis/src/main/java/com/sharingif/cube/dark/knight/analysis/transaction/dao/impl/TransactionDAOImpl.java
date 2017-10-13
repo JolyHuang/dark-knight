@@ -9,6 +9,7 @@ import com.sharingif.cube.dark.knight.analysis.app.dao.impl.CubeMongoDBDAOImpl;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionStatistics;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
 import com.sharingif.cube.persistence.database.pagination.PaginationRepertory;
 import org.bson.Document;
@@ -144,8 +145,8 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
                                 Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin())
                                 ,Filters.eq(Transaction.TRANS_TYPE_KEY, transaction.getTransType())
                         )),
-                        Aggregates.project(Projections.computed("hour", new BasicDBObject("$hour", "$"+Transaction.START_TIME_KEY))),
-                        Aggregates.group("$hour", Accumulators.sum("count", 1)),
+                        Aggregates.project(Projections.computed("hour", new BasicDBObject("$hour", new BasicDBObject("$add",new Object[]{"$"+Transaction.START_TIME_KEY, 28800000})))),
+                        Aggregates.group("$hour",  Accumulators.sum("count", 1)),
                         Aggregates.sort(Sorts.orderBy(Sorts.ascending("_id")))
                 )
         ).iterator();
@@ -155,6 +156,36 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
                 Document document = cursor.next();
                 TransactionDateTimeStatistics transactionDateTimeStatistics = new TransactionDateTimeStatistics();
                 transactionDateTimeStatistics.setHour(document.getInteger("_id"));
+                transactionDateTimeStatistics.setCount(document.getInteger("count"));
+
+                documentList.add(transactionDateTimeStatistics);
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return documentList;
+    }
+
+    @Override
+    public List<TransactionStatistics> statisticsByTransId(Transaction transaction) {
+        MongoCursor<Document> cursor = getCollection().aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.and(
+                                Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin())
+                                ,Filters.eq(Transaction.TRANS_TYPE_KEY, transaction.getTransType())
+                        )),
+                        Aggregates.group("$"+Transaction.TRANS_ID_KEY,  Accumulators.sum("count", 1)),
+                        Aggregates.sort(Sorts.orderBy(Sorts.descending("count"))),
+                        Aggregates.limit(12)
+                )
+        ).iterator();
+        List<TransactionStatistics> documentList = new LinkedList<TransactionStatistics>();
+        try {
+            while (cursor.hasNext()) {
+                Document document = cursor.next();
+                TransactionStatistics transactionDateTimeStatistics = new TransactionStatistics();
+                transactionDateTimeStatistics.setTransId(document.getString("_id"));
                 transactionDateTimeStatistics.setCount(document.getInteger("count"));
 
                 documentList.add(transactionDateTimeStatistics);

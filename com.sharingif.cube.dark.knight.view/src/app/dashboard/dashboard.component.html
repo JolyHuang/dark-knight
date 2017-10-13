@@ -43,75 +43,108 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="box p-a">
-        <div class="pull-left m-r">
-            <span class="w-40 warn text-center rounded">
-              <i class="material-icons">people</i>
-            </span>
+    <div class="col-sm-12 col-md-5 col-lg-4">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="box p-a">
+            <div class="pull-left m-r">
+              <i class="fa fa-users text-2x text-danger m-y-sm"></i>
+            </div>
+            <div class="clear">
+              <div class="text-muted">用户</div>
+              <h4 class="m-0 text-md _600"><a href>{{transactionDay.register}}</a></h4>
+            </div>
+          </div>
         </div>
-        <div class="clear">
-          <h4 class="m-0 text-md"><a href>{{transactionDay.register}} <span class="text-sm"></span></a></h4>
-          <small class="text-muted">当日注册用户数</small>
+        <div class="col-sm-6">
+          <div class="box p-a">
+            <div class="pull-left m-r">
+              <i class="fa fa-sign-in text-2x text-info m-y-sm"></i>
+            </div>
+            <div class="clear">
+              <div class="text-muted">充值</div>
+              <h4 class="m-0 text-md _600"><a href>{{transactionDay.rechargeSubmit}}</a></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="box p-a">
+            <div class="pull-left m-r">
+              <i class="fa fa-sign-out text-2x text-accent m-y-sm"></i>
+            </div>
+            <div class="clear">
+              <div class="text-muted">提现</div>
+              <h4 class="m-0 text-md _600"><a href>{{transactionDay.withdrawSubmit}} </a></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="box p-a">
+            <div class="pull-left m-r">
+              <i class="fa fa-university text-2x text-success m-y-sm"></i>
+            </div>
+            <div class="clear">
+              <div class="text-muted">贷款</div>
+              <h4 class="m-0 text-md _600"><a href>{{transactionDay.loanApply}}</a></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="row no-gutter box-color text-center primary">
+            <div class="col-sm-6 p-a">
+              Followers
+              <h4 class="m-0 text-md _600"><a href>2350</a></h4>
+            </div>
+            <div class="col-sm-6 p-a dker">
+              Following
+              <h4 class="m-0 text-md _600"><a href>7250</a></h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="box-color p-a primary">
-        <div class="pull-right m-l">
-            <span class="w-40 dker text-center rounded">
-              <i class="material-icons">local_shipping</i>
-            </span>
-        </div>
-        <div class="clear">
-          <h4 class="m-0 text-md"><a href>{{transactionDay.rechargeSubmit}} <span class="text-sm"></span></a></h4>
-          <small class="text-muted">当日充值确认次数</small>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="box p-a">
-        <div class="pull-right m-l">
-            <span class="w-40 accent text-center rounded">
-              <i class="material-icons">people</i>
-            </span>
-        </div>
-        <div class="clear">
-          <h4 class="m-0 text-md"><a href>{{transactionDay.withdrawSubmit}} <span class="text-sm"></span></a></h4>
-          <small class="text-muted">当日提现确认次数</small>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="box-color p-a accent">
-        <div class="pull-left m-r">
-            <span class="w-40 dker text-center rounded">
-              <i class="material-icons">comment</i>
-            </span>
-        </div>
-        <div class="clear">
-          <h4 class="m-0 text-md"><a href>{{transactionDay.loanApply}} <span class="text-sm"></span></a></h4>
-          <small class="text-muted">当日贷款申请次数</small>
+    <div class="col-sm-12 col-md-7 col-lg-8">
+      <div class="row no-gutter box dark bg">
+        <div class="col-sm-12">
+          <div class="box-header">
+            <h3>交易量</h3>
+            <small>当天24小时交易量</small>
+          </div>
+          <div class="box-body">
+            <canvas height="75" baseChart
+                    [data]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [chartType]="lineChartType"
+                    [colors]="lineChartColors"
+                    [legend]="false"
+                    (chartHover)="chartClicked($event)"
+                    (chartClick)="chartHovered($event)"></canvas>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-12">
-      <div class="box">
-        <div class="box-header">
-          <h3>交易量</h3>
-          <!--<small>A general overview of your sales</small>-->
-        </div>
-        <div>
-          <canvas #myChart baseChart
-                  [data]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [options]="lineChartOptions"
-                  [chartType]="lineChartType"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)"></canvas>
+    <div class="col-sm-12 col-md-7 col-lg-12">
+      <div class="row no-gutter box dark bg">
+        <div class="col-sm-12">
+          <div class="box-header">
+            <h3>交易量</h3>
+            <small>当天24小时交易量</small>
+          </div>
+          <div class="box-body">
+            <canvas height="75" baseChart
+                    [data]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"
+                    [legend]="false"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
         </div>
       </div>
     </div>
