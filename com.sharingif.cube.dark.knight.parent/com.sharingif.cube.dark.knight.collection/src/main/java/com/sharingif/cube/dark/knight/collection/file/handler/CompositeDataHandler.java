@@ -1,10 +1,9 @@
-package com.sharingif.cube.dark.knight.collection.handler;
+package com.sharingif.cube.dark.knight.collection.file.handler;
 
-import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplicationContext;
-import com.sharingif.cube.dark.knight.collection.write.DataWrite;
-import org.springframework.stereotype.Component;
+import com.sharingif.cube.dark.knight.collection.file.write.DataWrite;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * 组合数据加工
@@ -14,8 +13,18 @@ import java.util.LinkedHashMap;
  * @since v1.0
  * 2017/9/25 下午2:17
  */
-@Component
 public class CompositeDataHandler implements DataHandler {
+
+    private List<DataHandler> dataHandlerList;
+    private List<DataWrite> dataWriteList;
+
+    public void setDataHandlerList(List<DataHandler> dataHandlerList) {
+        this.dataHandlerList = dataHandlerList;
+    }
+
+    public void setDataWriteList(List<DataWrite> dataWriteList) {
+        this.dataWriteList = dataWriteList;
+    }
 
     @Override
     public boolean isMatch(String data) {
@@ -25,7 +34,7 @@ public class CompositeDataHandler implements DataHandler {
     @Override
     public LinkedHashMap<String, Object> handle(String data) {
 
-        for(DataHandler dataHandler : DarkKnightCollectionApplicationContext.DATA_HANDLER_LIST) {
+        for(DataHandler dataHandler : dataHandlerList) {
             if(dataHandler.isMatch(data)) {
                 LinkedHashMap<String, Object> dataMap = dataHandler.handle(data);
 
@@ -46,7 +55,7 @@ public class CompositeDataHandler implements DataHandler {
      * @param dataMap
      */
     protected void write(LinkedHashMap<String, Object> dataMap) {
-        for(DataWrite dataWrite : DarkKnightCollectionApplicationContext.DATA_WRITE_LIST) {
+        for(DataWrite dataWrite : dataWriteList) {
             dataWrite.write(dataMap);
         }
     }

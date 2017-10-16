@@ -1,6 +1,7 @@
-package com.sharingif.cube.dark.knight.collection.write;
+package com.sharingif.cube.dark.knight.collection.applog.write;
 
 import com.mongodb.client.MongoDatabase;
+import com.sharingif.cube.dark.knight.collection.file.write.DataWrite;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;

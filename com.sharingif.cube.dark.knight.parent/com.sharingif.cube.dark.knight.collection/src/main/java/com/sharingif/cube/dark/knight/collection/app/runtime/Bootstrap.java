@@ -1,4 +1,4 @@
-package com.sharingif.cube.dark.knight.collection.runtime;
+package com.sharingif.cube.dark.knight.collection.app.runtime;
 
 import com.sharingif.cube.context.annotation.ExtendedAnnotationBeanNameGenerator;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

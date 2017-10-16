@@ -1,4 +1,4 @@
-package com.sharingif.cube.dark.knight.collection.handler;
+package com.sharingif.cube.dark.knight.collection.file.handler;
 
 /**
  * 保存group index 和数据key

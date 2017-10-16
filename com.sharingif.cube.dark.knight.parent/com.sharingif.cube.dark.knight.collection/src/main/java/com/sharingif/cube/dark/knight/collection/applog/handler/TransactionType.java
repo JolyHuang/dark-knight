@@ -1,4 +1,4 @@
-package com.sharingif.cube.dark.knight.collection.handler;
+package com.sharingif.cube.dark.knight.collection.applog.handler;
 
 /**
  * 交易类型

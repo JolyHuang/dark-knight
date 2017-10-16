@@ -1,6 +1,5 @@
-package com.sharingif.cube.dark.knight.collection.handler;
+package com.sharingif.cube.dark.knight.collection.file.handler;
 
-import java.io.BufferedReader;
 import java.util.LinkedHashMap;
 
 /**

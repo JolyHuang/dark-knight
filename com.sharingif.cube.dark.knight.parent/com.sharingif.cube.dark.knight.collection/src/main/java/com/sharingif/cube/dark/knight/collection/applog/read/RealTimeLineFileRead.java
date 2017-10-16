@@ -1,10 +1,13 @@
-package com.sharingif.cube.dark.knight.collection.read;
+package com.sharingif.cube.dark.knight.collection.applog.read;
 
 import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
-import com.sharingif.cube.dark.knight.collection.handler.DataHandler;
+import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplicationContext;
+import com.sharingif.cube.dark.knight.collection.file.handler.DataHandler;
+import com.sharingif.cube.dark.knight.collection.file.read.FileRead;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -21,9 +24,11 @@ import java.util.regex.Pattern;
  * 2017/9/25 下午12:53
  */
 @Component
-public class RealTimeLineFileRead implements FileRead {
+public class RealTimeLineFileRead implements FileRead, InitializingBean {
 
-    private String currentProcessData;
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private String currentProcessDate;
     private boolean errorDataFlag = false;
     private StringBuilder errorData = null;
 
@@ -35,8 +40,6 @@ public class RealTimeLineFileRead implements FileRead {
         this.dataHandler = dataHandler;
     }
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-
     protected String changeFilePath(String filePath) {
         String currentDate = DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT);
 
@@ -44,7 +47,7 @@ public class RealTimeLineFileRead implements FileRead {
 
         File newFile = new File(newFilePath);
         if(newFile.exists()) {
-            currentProcessData = currentDate;
+            currentProcessDate = currentDate;
         }
         return newFilePath;
     }
@@ -117,7 +120,8 @@ public class RealTimeLineFileRead implements FileRead {
 
             try {
                 TimeUnit.SECONDS.sleep(5);
-                if(!DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT).equals(currentProcessData)) {
+                if(!DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT).equals(currentProcessDate)) {
+                    logger.info("current process date: {}", currentProcessDate);
                     String newFilePath = changeFilePath(filePath);
                     File newFile = new File(newFilePath);
                     if(newFile.exists()) {
@@ -132,4 +136,8 @@ public class RealTimeLineFileRead implements FileRead {
 
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        read(DarkKnightCollectionApplicationContext.APP_INFO_FILE_PATH);
+    }
 }

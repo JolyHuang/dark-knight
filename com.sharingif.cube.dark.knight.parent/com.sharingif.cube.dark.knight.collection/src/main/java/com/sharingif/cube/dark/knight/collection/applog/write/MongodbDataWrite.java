@@ -1,17 +1,16 @@
-package com.sharingif.cube.dark.knight.collection.write;
+package com.sharingif.cube.dark.knight.collection.applog.write;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.sharingif.cube.core.util.DateUtils;
-import com.sharingif.cube.dark.knight.collection.handler.TransactionType;
+import com.sharingif.cube.dark.knight.collection.applog.handler.TransactionType;
+import com.sharingif.cube.dark.knight.collection.file.write.DataWrite;
+import com.sharingif.cube.dark.knight.collection.persistence.MongodbPersistence;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,26 +24,15 @@ import java.util.Map;
  * 2017/9/26 下午4:36
  */
 @Component
-public class MongodbDataWrite implements DataWrite, InitializingBean {
+public class MongodbDataWrite implements DataWrite {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private String host;
-    private int port;
-    private String databaseName;
-    private MongoDatabase mongoDatabase;
+    private MongodbPersistence mongodbPersistence;
 
-    @Value("${dataSource.mongodb.host}")
-    public void setHost(String host) {
-        this.host = host;
-    }
-    @Value("${dataSource.mongodb.port}")
-    public void setPort(int port) {
-        this.port = port;
-    }
-    @Value("${dataSource.mongodb.databaseName}")
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
+    @Resource
+    public void setMongodbPersistence(MongodbPersistence mongodbPersistence) {
+        this.mongodbPersistence = mongodbPersistence;
     }
 
     protected Document convertLinkedHashMapToLinkedHashMap(LinkedHashMap<String, Object> data) {
@@ -56,12 +44,12 @@ public class MongodbDataWrite implements DataWrite, InitializingBean {
     }
 
     protected void writeServerStarStop(LinkedHashMap<String, Object> data) {
-        MongoCollection<Document> collection = mongoDatabase.getCollection("SERVER_STAR_STOP");
+        MongoCollection<Document> collection = mongodbPersistence.getCollection("SERVER_STAR_STOP");
         collection.insertOne(convertLinkedHashMapToLinkedHashMap(data));
     }
 
     protected void writeTransaction(LinkedHashMap<String, Object> data) {
-        MongoCollection<Document> collection = mongoDatabase.getCollection("TRANSACTION");
+        MongoCollection<Document> collection = mongodbPersistence.getCollection("TRANSACTION");
         collection.insertOne(convertLinkedHashMapToLinkedHashMap(data));
     }
 
@@ -87,20 +75,5 @@ public class MongodbDataWrite implements DataWrite, InitializingBean {
         writeTransaction(data);
 
     }
-
-    protected MongoCollection<Document> getCollection(String collectionName) {
-        return mongoDatabase.getCollection(collectionName);
-    }
-
-    protected void initMongoDB() {
-        MongoClient mongoClient = new MongoClient(host , port);
-        mongoDatabase = mongoClient.getDatabase(databaseName);
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        initMongoDB();
-    }
-
 
 }

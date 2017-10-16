@@ -1,4 +1,4 @@
-package com.sharingif.cube.dark.knight.collection.write;
+package com.sharingif.cube.dark.knight.collection.file.write;
 
 import java.util.LinkedHashMap;
 

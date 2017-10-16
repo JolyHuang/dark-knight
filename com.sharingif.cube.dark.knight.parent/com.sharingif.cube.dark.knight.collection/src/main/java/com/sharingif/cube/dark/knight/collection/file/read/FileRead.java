@@ -1,4 +1,4 @@
-package com.sharingif.cube.dark.knight.collection.read;
+package com.sharingif.cube.dark.knight.collection.file.read;
 
 /**
  * 文件读取

@@ -31,7 +31,6 @@ export class DashboardComponent implements OnInit {
     {
       backgroundColor: 'rgba(12,194,170,0.2)',
       borderColor: 'rgba(12,194,170,1.0)',
-      fontColor: '#FFFFFF',
       borderWidth: 2,
       pointBackgroundColor: 'rgba(255,255,255,1.0)',
       pointBorderColor: 'rgba(12,194,170,1.0)',
@@ -61,12 +60,29 @@ export class DashboardComponent implements OnInit {
 
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          fontColor: 'rgba(255,255,255,0.7)',
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          fontColor: 'rgba(255,255,255,0.87)',
+        }
+      }]
+    }
   };
   public barChartLabels: Array<string> = new Array();
   public barChartData:  Array<any>= new Array();
   public barChartType:string = 'bar';
-  public barChartLegend:boolean = true;
+
+  public barChartColors: Array<any> = [
+    {
+      backgroundColor: 'rgba(54,162,235,0.8)'
+    }
+  ];
 
   // events
   public chartClicked(e:any):void {

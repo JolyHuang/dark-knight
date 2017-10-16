@@ -177,7 +177,7 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
                         )),
                         Aggregates.group("$"+Transaction.TRANS_ID_KEY,  Accumulators.sum("count", 1)),
                         Aggregates.sort(Sorts.orderBy(Sorts.descending("count"))),
-                        Aggregates.limit(12)
+                        Aggregates.limit(30)
                 )
         ).iterator();
         List<TransactionStatistics> documentList = new LinkedList<TransactionStatistics>();

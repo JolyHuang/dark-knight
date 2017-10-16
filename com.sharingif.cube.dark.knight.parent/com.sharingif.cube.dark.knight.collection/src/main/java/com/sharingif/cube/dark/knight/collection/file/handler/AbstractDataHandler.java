@@ -1,6 +1,7 @@
-package com.sharingif.cube.dark.knight.collection.handler;
+package com.sharingif.cube.dark.knight.collection.file.handler;
 
 import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplicationContext;
+import com.sharingif.cube.dark.knight.collection.applog.handler.TransactionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +21,42 @@ public abstract class AbstractDataHandler implements DataHandler {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    abstract protected String getType();
+    private String type;
+    private Pattern mathPattern;
+    private Pattern findPattern;
+    private GroupData[] groupIndexArray;
 
-    abstract protected Pattern getMathPattern();
+    public String getType() {
+        return type;
+    }
 
-    abstract protected Pattern getFindPattern();
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Pattern getMathPattern() {
+        return mathPattern;
+    }
+
+    public void setMathPattern(Pattern mathPattern) {
+        this.mathPattern = mathPattern;
+    }
+
+    public Pattern getFindPattern() {
+        return findPattern;
+    }
+
+    public void setFindPattern(Pattern findPattern) {
+        this.findPattern = findPattern;
+    }
+
+    public GroupData[] getGroupIndexArray() {
+        return groupIndexArray;
+    }
+
+    public void setGroupIndexArray(GroupData[] groupIndexArray) {
+        this.groupIndexArray = groupIndexArray;
+    }
 
     @Override
     public boolean isMatch(String data) {
@@ -35,8 +67,6 @@ public abstract class AbstractDataHandler implements DataHandler {
 
         return false;
     }
-
-    abstract protected GroupData[] getGroupIndexArray();
 
     @Override
     public LinkedHashMap<String, Object> handle(String data) {
