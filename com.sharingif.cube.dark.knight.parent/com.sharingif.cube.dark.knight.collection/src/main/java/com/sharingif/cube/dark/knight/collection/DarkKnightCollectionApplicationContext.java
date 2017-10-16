@@ -24,20 +24,20 @@ public class DarkKnightCollectionApplicationContext {
 
     private static final Logger logger = LoggerFactory.getLogger(DarkKnightCollectionApplicationContext.class);
 
-    private static final String APP_INFO_FILE_PATH_KEY = "appInfoFilePath";
-    private static final String IP_KEY = "ip";
-    private static final String SERVER_NAME_KEY = "serverName";
+    public static final String APP_INFO_FILE_PATH_KEY = "appInfoFilePath";
+    public static final String SERVER_IP_KEY = "serverIp";
+    public static final String SERVER_NAME_KEY = "serverName";
 
     public static final String APP_INFO_FILE_PATH;
-    public static final String IP;
+    public static final String SERVER_IP;
     public static final String SERVER_NAME;
 
     static {
         Properties properties = null;
         InputStream in = null;
         try {
-            String filePath = System.getProperty("user.dir")+"/CubeConfigure.properties";
-//            String filePath = "/Users/Joly/Work/Joly/project/dark-knight/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.collection/src/main/resources/config/app/CubeConfigure.properties";
+//            String filePath = System.getProperty("user.dir")+"/CubeConfigure.properties";
+            String filePath = "/Users/Joly/Work/Joly/project/dark-knight/com.sharingif.cube.dark.knight.parent/com.sharingif.cube.dark.knight.collection/src/main/resources/config/app/CubeConfigure.properties";
             in = new FileInputStream(new File(filePath));
             properties = new Properties();
             properties.load(in);
@@ -63,11 +63,11 @@ public class DarkKnightCollectionApplicationContext {
         initParameterLogger(APP_INFO_FILE_PATH_KEY, APP_INFO_FILE_PATH);
 
         try {
-            IP = properties.getProperty(IP_KEY).trim();
+            SERVER_IP = properties.getProperty(SERVER_IP_KEY).trim();
         } catch (Exception e) {
             throw new CubeRuntimeException(e);
         }
-        initParameterLogger(IP_KEY, IP);
+        initParameterLogger(SERVER_IP_KEY, SERVER_IP);
 
         try {
             SERVER_NAME = properties.getProperty(SERVER_NAME_KEY).trim();
