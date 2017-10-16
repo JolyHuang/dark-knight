@@ -35,7 +35,7 @@ public class RealTimeLineFileRead implements FileRead, InitializingBean {
     private DataHandler dataHandler;
 
 
-    @Resource(name="compositeDataHandler")
+    @Resource(name="appInfoCompositeDataHandler")
     public void setDataHandler(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
     }
