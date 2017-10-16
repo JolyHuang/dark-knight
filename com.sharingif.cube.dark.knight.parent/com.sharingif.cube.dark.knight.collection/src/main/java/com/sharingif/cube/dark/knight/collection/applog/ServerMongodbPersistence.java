@@ -6,6 +6,7 @@ import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplication
 import com.sharingif.cube.dark.knight.collection.persistence.MongodbPersistence;
 import org.bson.Document;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  * @since v1.0
  * 2017/10/16 下午8:18
  */
+@Component
 public class ServerMongodbPersistence implements InitializingBean {
 
     private MongodbPersistence mongodbPersistence;
