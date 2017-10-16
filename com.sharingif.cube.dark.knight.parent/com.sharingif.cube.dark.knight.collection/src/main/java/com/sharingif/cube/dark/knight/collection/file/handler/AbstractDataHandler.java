@@ -75,8 +75,8 @@ public abstract class AbstractDataHandler implements DataHandler {
         GroupData[] groupDataArray = getGroupIndexArray();
 
         LinkedHashMap<String, Object> dataMap = new LinkedHashMap<String, Object>();
-        dataMap.put("serverIp", DarkKnightCollectionApplicationContext.IP);
-        dataMap.put("serverName", DarkKnightCollectionApplicationContext.SERVER_NAME);
+        dataMap.put(DarkKnightCollectionApplicationContext.SERVER_IP_KEY, DarkKnightCollectionApplicationContext.SERVER_IP);
+        dataMap.put(DarkKnightCollectionApplicationContext.SERVER_NAME_KEY, DarkKnightCollectionApplicationContext.SERVER_NAME);
         dataMap.put(TransactionType.TRANS_TYPE.toString(), getType());
         if(matcher.find()) {
             for(GroupData groupData : groupDataArray) {
