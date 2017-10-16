@@ -2,7 +2,7 @@ package com.sharingif.cube.dark.knight.collection.app.autoconfigure.components;
 
 import com.sharingif.cube.dark.knight.collection.applog.handler.AppLogDataHandler;
 import com.sharingif.cube.dark.knight.collection.applog.handler.TransactionType;
-import com.sharingif.cube.dark.knight.collection.applog.write.MongodbDataWrite;
+import com.sharingif.cube.dark.knight.collection.applog.write.ConsoleDataWrite;
 import com.sharingif.cube.dark.knight.collection.file.handler.CompositeDataHandler;
 import com.sharingif.cube.dark.knight.collection.file.handler.DataHandler;
 import com.sharingif.cube.dark.knight.collection.file.handler.GroupData;
@@ -258,7 +258,7 @@ public class AppLogComponentsAutoconfigure {
             AppLogDataHandler transportErrorDataHandler,
             AppLogDataHandler transactionInfoDataHandler,
 
-            MongodbDataWrite mongodbDataWrite
+            ConsoleDataWrite consoleDataWrite
     ) {
 
         List<DataHandler> dataHandlerList = new ArrayList<DataHandler>();
@@ -277,10 +277,11 @@ public class AppLogComponentsAutoconfigure {
 
 
         List<DataWrite> dataWriteList  = new  ArrayList<DataWrite>();
-        dataWriteList.add(mongodbDataWrite);
+        dataWriteList.add(consoleDataWrite);
 
         CompositeDataHandler compositeDataHandler = new CompositeDataHandler();
         compositeDataHandler.setDataHandlerList(dataHandlerList);
+        compositeDataHandler.setDataWriteList(dataWriteList);
 
         return compositeDataHandler;
     }
