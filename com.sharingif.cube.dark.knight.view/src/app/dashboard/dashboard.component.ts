@@ -1,12 +1,12 @@
 import {Component, OnInit } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+
+import { HttpRequest } from '../http/http.request';
+import { HttpJsonService } from '../http/http.json.service';
 
 import { TransactionVolumeDay } from '../transaction/transaction.volume.day';
 import { TransactionDay } from '../transaction/transaction.day';
 import { TransactionDateTimeStatistics } from '../transaction/transaction.datetime.statistics';
 import { TransactionStatistics } from '../transaction/transaction.statistics';
-
-const headers = new HttpHeaders().set("Content-Type", "application/json");
 
 @Component({
   selector: 'dashboard',
@@ -16,11 +16,11 @@ const headers = new HttpHeaders().set("Content-Type", "application/json");
 export class DashboardComponent implements OnInit {
 
   constructor(
-    private http: HttpClient
+    private http: HttpJsonService
   ) {};
 
-  transactionVolumeDay : TransactionVolumeDay = new TransactionVolumeDay();
-  transactionDay : TransactionDay = new TransactionDay();
+  public transactionVolumeDay : TransactionVolumeDay = new TransactionVolumeDay();
+  public transactionDay : TransactionDay = new TransactionDay();
   transactionDateTimeStatisticsArray : Array<TransactionDateTimeStatistics> = new Array<TransactionDateTimeStatistics>();
   transactionStatisticsArray : Array<TransactionStatistics> = new Array<TransactionStatistics>();
 
@@ -94,60 +94,55 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http
-      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/volume/day', {headers})
-      .subscribe(
-        res => {
-          this.transactionVolumeDay = res["_data"];
-        },
-        err => {
-          console.log("Error occured");
-        });
 
-    this.http
-      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/day', {headers})
-      .subscribe(
-        res => {
-          this.transactionDay = res["_data"];
-        },
-        err => {
-          console.log("Error occured");
-        });
+    let superObject = this;
 
-    this.http
-      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/statistics/day/hour', {headers})
-      .subscribe(
-        res => {
-          this.transactionDateTimeStatisticsArray = res["_data"];
+    let volumeDayHttpRequest = new HttpRequest();
+    volumeDayHttpRequest.url = "transaction/volume/day";
+    volumeDayHttpRequest.success = function (data) {
+      superObject.transactionVolumeDay = data;
+    };
+    this.http.get(volumeDayHttpRequest);
 
-          for(let transactionDateTimeStatistics  of this.transactionDateTimeStatisticsArray) {
-            this.lineChartLabels.push(transactionDateTimeStatistics.hour);
-            this.lineChartData.push(transactionDateTimeStatistics.count);
-          }
-          this.lineChartLabels = this.lineChartLabels.slice();
-          this.lineChartData = this.lineChartData.slice();
-        },
-        err => {
-          console.log("Error occured");
-        });
+    let dayHttpRequest = new HttpRequest();
+    dayHttpRequest.url = "transaction/day";
+    dayHttpRequest.success = function (data) {
+      superObject.transactionDay = data;
+    };
+    this.http.get(dayHttpRequest);
 
-    this.http
-      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/statistics/day/transId', {headers})
-      .subscribe(
-        res => {
-          this.transactionStatisticsArray = res["_data"];
+    let dayHourHttpRequest = new HttpRequest();
+    dayHourHttpRequest.url = "transaction/statistics/day/hour";
+    dayHourHttpRequest.success = function (data) {
+      superObject.transactionDateTimeStatisticsArray = data;
 
-          let chartData = new Array<number>();
-          for(let transactionStatistics  of this.transactionStatisticsArray) {
-            this.barChartLabels.push(transactionStatistics.transId.replace("/api/", ""));
-            this.barChartData.push(transactionStatistics.count);
-          }
-          this.barChartLabels = this.barChartLabels.slice();
-          this.barChartData = this.barChartData.slice();
-        },
-        err => {
-          console.log("Error occured");
-        });
+      for(let transactionDateTimeStatistics  of superObject.transactionDateTimeStatisticsArray) {
+        superObject.lineChartLabels.push(transactionDateTimeStatistics.hour);
+        superObject.lineChartData.push(transactionDateTimeStatistics.count);
+      }
+      superObject.lineChartLabels = superObject.lineChartLabels.slice();
+      superObject.lineChartData = superObject.lineChartData.slice();
+    };
+    this.http.get(dayHourHttpRequest);
+
+    let dayTransIdHttpRequest = new HttpRequest();
+    dayTransIdHttpRequest.url = "transaction/statistics/day/transId";
+    dayTransIdHttpRequest.success = function (data) {
+      superObject.transactionStatisticsArray = data;
+
+      for(let transactionStatistics  of superObject.transactionStatisticsArray) {
+        let transId = transactionStatistics.transId.replace("/api/", "");
+        if(transId.length>12) {
+          transId = transId.slice(0,9)+"...";
+        }
+        superObject.barChartLabels.push(transId);
+        superObject.barChartData.push(transactionStatistics.count);
+      }
+      superObject.barChartLabels = superObject.barChartLabels.slice();
+      superObject.barChartData = superObject.barChartData.slice();
+    };
+    this.http.get(dayTransIdHttpRequest);
+
   };
 
 }

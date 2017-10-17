@@ -1,4 +1,5 @@
 export class HttpRequest {
+
   ip: string;
   port: number;
   address: string;
@@ -9,7 +10,7 @@ export class HttpRequest {
   success: object;
   failure: object;
   getFullUrl() {
-    if(this.address !== null) {
+    if(this.address != null) {
       if(this.useHttps) {
         return "https://"+this.address+"/"+this.contextPath+"/"+this.url;
       } else {

@@ -18,7 +18,7 @@ export class HttpJsonService {
   useHttps: boolean;
   contextPath: string = "dark-knight-analysis";
 
-  handleHttpRequest(httpRequest: HttpRequest) {
+  private handleHttpRequest(httpRequest: HttpRequest) {
     if(httpRequest.ip == null) {
       httpRequest.ip = this.ip
     }
