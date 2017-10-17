@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+
+import { HttpRequest } from '../http/http.request';
+import { HttpJsonService } from '../http/http.json.service';
+
 import {ServerApp} from "./server.app";
 
-
-const headers = new HttpHeaders().set("Content-Type", "application/json");
 
 @Component({
   selector: 'server',
@@ -12,21 +13,23 @@ const headers = new HttpHeaders().set("Content-Type", "application/json");
 
 export class ServerAppListComponent implements OnInit {
 
-  constructor(private http: HttpClient) {};
+  constructor(
+    private http: HttpJsonService
+  ) {};
 
   serverAppList: Array<ServerApp>;
 
   ngOnInit(): void {
-    this.http
-      .get('http://127.0.0.1:9300/dark-knight-analysis/serverApp/list', {headers})
-      .subscribe(
-        res => {
-          this.serverAppList = res["_data"];
 
-        },
-        err => {
-          console.log("Error occured");
-        });
+    let superObject = this;
+
+    let dayHttpRequest = new HttpRequest();
+    dayHttpRequest.url = "serverApp/list";
+    dayHttpRequest.success = function (data) {
+      superObject.serverAppList = data;
+    };
+    this.http.get(dayHttpRequest);
+
   };
 
 }

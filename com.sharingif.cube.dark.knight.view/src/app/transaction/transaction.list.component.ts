@@ -1,6 +1,8 @@
 import { Component, OnInit, Injectable, Input } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 
+
+import { HttpRequest } from '../http/http.request';
+import { HttpJsonService } from '../http/http.json.service';
 
 import { PaginationCondition } from '../pagination/pagination.condition';
 import { PaginationRepertory } from '../pagination/pagination.repertory';
@@ -8,8 +10,6 @@ import { Transaction } from './transaction';
 
 declare var $:any;
 
-
-const headers = new HttpHeaders().set("Content-Type", "application/json");
 
 @Component({
   selector: 'transaction',
@@ -19,7 +19,9 @@ const headers = new HttpHeaders().set("Content-Type", "application/json");
 @Injectable()
 export class TransactionListComponent implements OnInit {
 
-  constructor(private http: HttpClient) {};
+  constructor(
+    private http: HttpJsonService
+  ) {};
 
   transTypeList = [
     {"name": "transactionBegin", "value": "transactionBegin"},
@@ -37,16 +39,16 @@ export class TransactionListComponent implements OnInit {
   queryList() : void {
     this.paginationCondition.condition = this.trans;
 
-    this.http
-      .post('http://127.0.0.1:9300/dark-knight-analysis/transaction/list', this.paginationCondition,{headers})
-      .subscribe(
-        res => {
-          this.paginationRepertory = res["_data"];
-          console.log(res);
-        },
-        err => {
-          console.log("Error occured");
-        });
+    let superObject = this;
+
+    let dayHttpRequest = new HttpRequest();
+    dayHttpRequest.url = "transaction/list";
+    dayHttpRequest.data = this.paginationCondition;
+    dayHttpRequest.success = function (data) {
+      superObject.paginationRepertory = data;
+    };
+    this.http.post(dayHttpRequest);
+
   };
 
   clickQueryList() : void {

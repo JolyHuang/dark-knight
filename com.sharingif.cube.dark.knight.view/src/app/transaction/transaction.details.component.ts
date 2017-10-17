@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+
+import { HttpRequest } from '../http/http.request';
+import { HttpJsonService } from '../http/http.json.service';
 
 import 'rxjs/add/operator/switchMap';
 
 
-const headers = new HttpHeaders().set("Content-Type", "application/json");
 
 @Component({
   selector: 'transaction',
@@ -16,7 +17,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpJsonService
   ) {};
 
   transUniqueId : string;
@@ -24,16 +25,15 @@ export class TransactionDetailsComponent implements OnInit {
 
   queryDetail() : void {
 
-    this.http
-      .get('http://127.0.0.1:9300/dark-knight-analysis/transaction/details/'+this.transUniqueId, {headers})
-      .subscribe(
-        res => {
-          this.transactionList = res["_data"];
-          console.log(res);
-        },
-        err => {
-          console.log("Error occured");
-        });
+    let superObject = this;
+
+    let dayHttpRequest = new HttpRequest();
+    dayHttpRequest.url = "transaction/details/";
+    dayHttpRequest.success = function (data) {
+      superObject.transactionList = data;
+    };
+    this.http.get(dayHttpRequest);
+
   };
 
   ngOnInit(): void {
