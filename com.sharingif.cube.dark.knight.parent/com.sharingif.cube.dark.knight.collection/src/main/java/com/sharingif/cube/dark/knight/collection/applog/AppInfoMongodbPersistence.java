@@ -1,6 +1,5 @@
 package com.sharingif.cube.dark.knight.collection.applog;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.sharingif.cube.dark.knight.collection.DarkKnightCollectionApplicationContext;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * AppInfoMongodbPersistence
