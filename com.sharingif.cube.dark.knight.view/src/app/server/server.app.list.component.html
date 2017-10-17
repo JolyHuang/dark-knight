@@ -1,0 +1,14 @@
+<div class="padding">
+  <div class="row m-b">
+    <div class="col-sm-4">
+      <div class="box" *ngFor="let serverApp of serverAppList">
+        <div class="box-header dker">
+          <h2 style="text-align: center">{{serverApp.serverIp}}</h2>
+        </div>
+        <div class="box-body">
+          <p class="m-0" *ngFor="let serverName of serverApp.serverList">{{serverName}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

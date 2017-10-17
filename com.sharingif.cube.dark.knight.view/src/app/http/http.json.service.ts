@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {HttpRequest} from "./http.request";
 
 
 const headers = new HttpHeaders().set("Content-Type", "application/json");
@@ -17,44 +18,62 @@ export class HttpJsonService {
   useHttps: boolean;
   contextPath: string = "dark-knight-analysis";
 
-
-  getUrlPrefix(): string {
-    if(this.address !== null) {
-      if(this.useHttps) {
-        return "https://"+this.address+"/"+this.contextPath;
-      } else {
-        return "http://"+this.address+"/"+this.contextPath;
-      }
+  handleHttpRequest(httpRequest: HttpRequest) {
+    if(httpRequest.ip == null) {
+      httpRequest.ip = this.ip
     }
-
-    if(this.useHttps) {
-      return "https://"+this.ip+":"+this.port+"/"+this.contextPath;
-    } else {
-      return "http://"+this.ip+":"+this.port+"/"+this.contextPath;
+    if(httpRequest.port == null) {
+      httpRequest.port = this.port
+    }
+    if(httpRequest.address == null) {
+      httpRequest.address = this.address
+    }
+    if(httpRequest.useHttps == null) {
+      httpRequest.useHttps = this.useHttps
+    }
+    if(httpRequest.contextPath == null) {
+      httpRequest.contextPath = this.contextPath
     }
   }
 
-  get(url: string, success: object, failure: object): any {
+  get(httpRequest: HttpRequest): any {
+
+    this.handleHttpRequest(httpRequest);
+
     this.http
-      .get(this.getUrlPrefix()+url, {headers})
+      .get(httpRequest.getFullUrl(), {headers})
       .subscribe(
-        res => {
-          return res["_data"];
+        response => {
+          if(response["_tranStatus"]) {
+            if(typeof httpRequest.success == "function"){
+              httpRequest.success(response["_data"]);
+            };
+
+          } else {
+            response => httpRequest.failure;
+          }
         },
         err => {
-          console.log("Error occured");
+          console.log(err);
         });
   }
 
-  post(url: string, data: any): any {
+  post(httpRequest: HttpRequest): any {
     this.http
-      .post(this.getUrlPrefix()+url, data,{headers})
+      .post(httpRequest.getFullUrl(), httpRequest.data,{headers})
       .subscribe(
-        res => {
-          return res["_data"];
+        response => {
+          if(response["_tranStatus"]) {
+            if(typeof httpRequest.success == "function"){
+              httpRequest.success(response["_data"]);
+            };
+
+          } else {
+            response => httpRequest.failure;
+          }
         },
         err => {
-          console.log("Error occured");
+          console.log(err);
         });
   }
 

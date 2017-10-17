@@ -15,6 +15,7 @@ import { HeaderComponent } from './header.component';
 import { ThemeSwitcherComponent } from './theme.switcher.component';
 import { FooterComponent } from './footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ServerAppListComponent } from './server/server.app.list.component'
 import { TransactionListComponent } from './transaction/transaction.list.component';
 import { TransactionDetailsComponent } from './transaction/transaction.details.component';
 
@@ -25,14 +26,19 @@ const appRoutes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'transaction',
+    path: 'serverAppList',
+    component: ServerAppListComponent,
+  },
+  {
+    path: 'transactionList',
     component: TransactionListComponent,
   },
   {
     path: 'transactionDetails/:transUniqueId',
     component: TransactionDetailsComponent,
   },
-  { path: '',
+  {
+    path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'
   }
@@ -46,6 +52,7 @@ const appRoutes: Routes = [
     ThemeSwitcherComponent,
     FooterComponent,
     DashboardComponent,
+    ServerAppListComponent,
     TransactionListComponent,
     TransactionDetailsComponent
   ],

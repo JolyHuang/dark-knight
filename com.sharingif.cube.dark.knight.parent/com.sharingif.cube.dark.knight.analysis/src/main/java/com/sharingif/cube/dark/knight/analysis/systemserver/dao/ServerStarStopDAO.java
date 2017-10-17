@@ -9,4 +9,7 @@ package com.sharingif.cube.dark.knight.analysis.systemserver.dao;
  * 2017/10/11 下午7:55
  */
 public interface ServerStarStopDAO {
+
+
+
 }
