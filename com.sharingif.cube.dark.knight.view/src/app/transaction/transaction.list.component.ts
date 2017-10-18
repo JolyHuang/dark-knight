@@ -90,6 +90,17 @@ export class TransactionListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    let currentDate = new Date();
+    let year = currentDate.getFullYear();
+    let month = currentDate.getMonth()+1;
+    let day = currentDate.getDate();
+
+    let currentDateStr = year+"-"+month+"-"+day;
+
+    this.trans.startTimeBegin = currentDateStr+" 00:00:00";
+    this.trans.startTimeEnd = currentDateStr+" 23:59:59";
+
     this.trans.transType = this.transTypeList[0].value;
     this.paginationCondition.currentPage = 1;
     this.paginationCondition.pageSize = 10;
