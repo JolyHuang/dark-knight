@@ -59,6 +59,9 @@ export class HttpJsonService {
   }
 
   post(httpRequest: HttpRequest): any {
+
+    this.handleHttpRequest(httpRequest);
+
     this.http
       .post(httpRequest.getFullUrl(), httpRequest.data,{headers})
       .subscribe(

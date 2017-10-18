@@ -19,8 +19,8 @@ export class DashboardComponent implements OnInit {
     private http: HttpJsonService
   ) {};
 
-  public transactionVolumeDay : TransactionVolumeDay = new TransactionVolumeDay();
-  public transactionDay : TransactionDay = new TransactionDay();
+  transactionVolumeDay : TransactionVolumeDay = new TransactionVolumeDay();
+  transactionDay : TransactionDay = new TransactionDay();
   transactionDateTimeStatisticsArray : Array<TransactionDateTimeStatistics> = new Array<TransactionDateTimeStatistics>();
   transactionStatisticsArray : Array<TransactionStatistics> = new Array<TransactionStatistics>();
 

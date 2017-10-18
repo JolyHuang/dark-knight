@@ -27,12 +27,12 @@ export class TransactionDetailsComponent implements OnInit {
 
     let superObject = this;
 
-    let dayHttpRequest = new HttpRequest();
-    dayHttpRequest.url = "transaction/details/";
-    dayHttpRequest.success = function (data) {
+    let httpRequest = new HttpRequest();
+    httpRequest.url = "transaction/details/"+this.transUniqueId;
+    httpRequest.success = function (data) {
       superObject.transactionList = data;
     };
-    this.http.get(dayHttpRequest);
+    this.http.get(httpRequest);
 
   };
 

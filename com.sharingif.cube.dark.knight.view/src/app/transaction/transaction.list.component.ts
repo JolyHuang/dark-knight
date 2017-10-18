@@ -1,6 +1,5 @@
 import { Component, OnInit, Injectable, Input } from '@angular/core';
 
-
 import { HttpRequest } from '../http/http.request';
 import { HttpJsonService } from '../http/http.json.service';
 
@@ -41,13 +40,13 @@ export class TransactionListComponent implements OnInit {
 
     let superObject = this;
 
-    let dayHttpRequest = new HttpRequest();
-    dayHttpRequest.url = "transaction/list";
-    dayHttpRequest.data = this.paginationCondition;
-    dayHttpRequest.success = function (data) {
+    let httpRequest = new HttpRequest();
+    httpRequest.url = "transaction/list";
+    httpRequest.data = this.paginationCondition;
+    httpRequest.success = function (data) {
       superObject.paginationRepertory = data;
     };
-    this.http.post(dayHttpRequest);
+    this.http.post(httpRequest);
 
   };
 
