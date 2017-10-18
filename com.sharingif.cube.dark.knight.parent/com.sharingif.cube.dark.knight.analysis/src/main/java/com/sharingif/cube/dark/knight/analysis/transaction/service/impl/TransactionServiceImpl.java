@@ -100,28 +100,28 @@ public class TransactionServiceImpl implements TransactionService {
         registerTransaction.setStartTimeBegin(currentDateBegin);
         registerTransaction.setStartTimeEnd(currentDateEnd);
         registerTransaction.setTransId(Transaction.REGISTER);
-        registerTransaction.setTransType(Transaction.TRANSACTION_ERROR);
+        registerTransaction.setTransType(Transaction.TRANSACTION_BEGIN);
         long register = transactionDAO.queryCount(registerTransaction);
 
         Transaction rechargeSubmitTransaction = new Transaction();
         rechargeSubmitTransaction.setStartTimeBegin(currentDateBegin);
         rechargeSubmitTransaction.setStartTimeEnd(currentDateEnd);
         rechargeSubmitTransaction.setTransId(Transaction.RECHARGE_SUBMIT);
-        rechargeSubmitTransaction.setTransType(Transaction.TRANSACTION_ERROR);
+        rechargeSubmitTransaction.setTransType(Transaction.TRANSACTION_BEGIN);
         long rechargeSubmit = transactionDAO.queryCount(rechargeSubmitTransaction);
 
         Transaction withdrawSubmitTransaction = new Transaction();
         withdrawSubmitTransaction.setStartTimeBegin(currentDateBegin);
         withdrawSubmitTransaction.setStartTimeEnd(currentDateEnd);
         withdrawSubmitTransaction.setTransId(Transaction.WITHDRAW_SUBMIT);
-        withdrawSubmitTransaction.setTransType(Transaction.TRANSACTION_ERROR);
+        withdrawSubmitTransaction.setTransType(Transaction.TRANSACTION_BEGIN);
         long withdrawSubmit = transactionDAO.queryCount(withdrawSubmitTransaction);
 
         Transaction loanApplyTransaction = new Transaction();
         loanApplyTransaction.setStartTimeBegin(currentDateBegin);
         loanApplyTransaction.setStartTimeEnd(currentDateEnd);
         loanApplyTransaction.setTransId(Transaction.LOAN_APPLY);
-        loanApplyTransaction.setTransType(Transaction.TRANSACTION_ERROR);
+        loanApplyTransaction.setTransType(Transaction.TRANSACTION_BEGIN);
         long loanApply = transactionDAO.queryCount(loanApplyTransaction);
 
         TransactionDay transactionDay = new TransactionDay();
