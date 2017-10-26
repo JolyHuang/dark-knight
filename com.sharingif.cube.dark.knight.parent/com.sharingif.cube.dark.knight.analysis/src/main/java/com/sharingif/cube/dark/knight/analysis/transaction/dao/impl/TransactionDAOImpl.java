@@ -31,7 +31,7 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
 
     @Override
     protected MongoCollection<Document> getCollection() {
-        return getMongoDatabase().getCollection("TRANSACTION");
+        return getMongoDatabase().getCollection("Transaction");
     }
 
     @Override

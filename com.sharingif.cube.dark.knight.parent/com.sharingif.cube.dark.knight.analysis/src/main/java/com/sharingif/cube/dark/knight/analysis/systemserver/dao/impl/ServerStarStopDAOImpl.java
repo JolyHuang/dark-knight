@@ -17,7 +17,7 @@ public class ServerStarStopDAOImpl extends CubeMongoDBDAOImpl implements ServerS
 
     @Override
     protected MongoCollection<Document> getCollection() {
-        return getMongoDatabase().getCollection("SERVER_STAR_STOP");
+        return getMongoDatabase().getCollection("ServerStarStop");
     }
 
 }

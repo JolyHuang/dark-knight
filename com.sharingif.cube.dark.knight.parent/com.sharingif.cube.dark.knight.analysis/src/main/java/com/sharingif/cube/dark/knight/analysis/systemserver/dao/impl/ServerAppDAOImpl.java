@@ -25,7 +25,7 @@ public class ServerAppDAOImpl extends CubeMongoDBDAOImpl implements ServerAppDAO
 
     @Override
     protected MongoCollection<Document> getCollection() {
-        return getMongoDatabase().getCollection("SERVER_APP");
+        return getMongoDatabase().getCollection("ServerApp");
     }
 
     @Override
