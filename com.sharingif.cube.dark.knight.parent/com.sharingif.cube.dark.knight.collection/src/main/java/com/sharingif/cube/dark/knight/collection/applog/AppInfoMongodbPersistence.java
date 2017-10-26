@@ -30,7 +30,7 @@ public class AppInfoMongodbPersistence implements InitializingBean {
 
     public void start() {
 
-        MongoCollection<Document> collection = mongodbPersistence.getCollection("SERVER_APP");
+        MongoCollection<Document> collection = mongodbPersistence.getCollection("ServerApp");
 
         Document document = collection.find(
                 Filters.and(

@@ -9,7 +9,7 @@
 		<property name="LOG_HOME" value="/home/opay/dark-knight/${APP_NAME}/logs" />
 	</springProfile>
 	<springProfile name="PROD">
-		<property name="LOG_HOME" value="/home/opay/dark-knight/${APP_NAME}/logs" />
+		<property name="LOG_HOME" value="/home/opay/dark-knight/opay-server/${APP_NAME}/logs" />
 	</springProfile>
 
 	<contextName>${APP_NAME}</contextName>
