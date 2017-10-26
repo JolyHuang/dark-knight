@@ -44,12 +44,12 @@ public class MongodbDataWrite implements DataWrite {
     }
 
     protected void writeServerStarStop(LinkedHashMap<String, Object> data) {
-        MongoCollection<Document> collection = mongodbPersistence.getCollection("SERVER_STAR_STOP");
+        MongoCollection<Document> collection = mongodbPersistence.getCollection("ServerStarStop");
         collection.insertOne(convertLinkedHashMapToLinkedHashMap(data));
     }
 
     protected void writeTransaction(LinkedHashMap<String, Object> data) {
-        MongoCollection<Document> collection = mongodbPersistence.getCollection("TRANSACTION");
+        MongoCollection<Document> collection = mongodbPersistence.getCollection("Transaction");
         collection.insertOne(convertLinkedHashMapToLinkedHashMap(data));
     }
 
