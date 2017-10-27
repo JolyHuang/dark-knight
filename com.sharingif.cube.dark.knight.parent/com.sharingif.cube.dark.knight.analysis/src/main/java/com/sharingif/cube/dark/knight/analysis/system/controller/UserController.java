@@ -3,6 +3,7 @@ package com.sharingif.cube.dark.knight.analysis.system.controller;
 import com.sharingif.cube.core.exception.UnknownCubeException;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
+import com.sharingif.cube.core.handler.chain.AHMChain;
 import com.sharingif.cube.dark.knight.analysis.system.model.entity.User;
 import org.springframework.stereotype.Controller;
 
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 public class UserController {
 
     @RequestMapping(value="login", method= RequestMethod.POST)
+    @AHMChain(ref = "loginChain")
     public User login(User user) {
 
         if(!("Dark-Knight".equals(user.getUsername()))) {

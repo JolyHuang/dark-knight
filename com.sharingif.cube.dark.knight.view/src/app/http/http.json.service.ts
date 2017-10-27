@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import {HttpRequest} from "./http.request";
+import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
+import { HttpRequest } from "./http.request";
 
 
 const headers = new HttpHeaders().set("Content-Type", "application/json");
@@ -41,7 +41,7 @@ export class HttpJsonService {
     this.handleHttpRequest(httpRequest);
 
     this.http
-      .get(httpRequest.getFullUrl(), {headers})
+      .get(httpRequest.getFullUrl(), {headers, withCredentials: true})
       .subscribe(
         response => {
           if(response["_tranStatus"]) {
@@ -63,7 +63,7 @@ export class HttpJsonService {
     this.handleHttpRequest(httpRequest);
 
     this.http
-      .post(httpRequest.getFullUrl(), httpRequest.data,{headers})
+      .post(httpRequest.getFullUrl(), httpRequest.data,{headers, withCredentials: true})
       .subscribe(
         response => {
           if(response["_tranStatus"]) {

@@ -8,8 +8,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 
 import { HttpJsonService } from './http/http.json.service';
+import { UserService } from './user/user.service';
 
 import { AppComponent } from './app.component';
+import { UserLoginComponent } from './user/user.login.component'
 import { NavbarComponent } from './navbar.component';
 import { HeaderComponent } from './header.component';
 import { ThemeSwitcherComponent } from './theme.switcher.component';
@@ -38,6 +40,10 @@ const appRoutes: Routes = [
     component: TransactionDetailsComponent,
   },
   {
+    path: 'login',
+    component: UserLoginComponent,
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'
@@ -47,6 +53,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    UserLoginComponent,
     NavbarComponent,
     HeaderComponent,
     ThemeSwitcherComponent,
@@ -67,7 +74,10 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [HttpJsonService],
+  providers: [
+    HttpJsonService,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

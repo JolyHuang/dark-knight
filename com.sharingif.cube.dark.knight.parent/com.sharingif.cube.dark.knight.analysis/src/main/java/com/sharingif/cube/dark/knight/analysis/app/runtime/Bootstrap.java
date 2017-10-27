@@ -45,7 +45,7 @@ public class Bootstrap {
 
     @EnableAutoConfiguration
     @ComponentScan(
-            basePackages = "com.sharingif.cube.dark.knight.analysis.*.dao,com.sharingif.cube.dark.knight.analysis.*.service,com.sharingif.cube.dark.knight.analysis.autoconfigure,com.sharingif.cube.spring.boot"
+            basePackages = "com.sharingif.cube.dark.knight.analysis.*.dao,com.sharingif.cube.dark.knight.analysis.*.service,com.sharingif.cube.dark.knight.analysis.app.autoconfigure,com.sharingif.cube.spring.boot"
             ,nameGenerator = ExtendedAnnotationBeanNameGenerator.class
             ,useDefaultFilters= false
             ,includeFilters={
