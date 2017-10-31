@@ -8,6 +8,8 @@ import com.sharingif.cube.core.user.ICoreUser;
 import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.dark.knight.analysis.system.model.entity.User;
 import com.sharingif.cube.security.exception.validation.access.NoUserAccessDecisionCubeException;
+import com.sharingif.cube.web.user.CoreUserHttpSessionManage;
+import com.sharingif.cube.web.user.IWebUserManage;
 import com.sharingif.cube.web.vert.x.request.VertXRequestInfo;
 
 import java.util.HashMap;
@@ -23,6 +25,12 @@ import java.util.Map;
  * 2017/10/26 下午6:12
  */
 public class NoUserChain extends AbstractHandlerMethodChain {
+
+    public NoUserChain() {
+        webUserManage = new CoreUserHttpSessionManage();
+    }
+
+    private IWebUserManage webUserManage;
 
     private String replaceContent;
     private Map<String,String> excludeMethods = new HashMap<String,String>();
@@ -52,9 +60,8 @@ public class NoUserChain extends AbstractHandlerMethodChain {
             return;
         }
 
-        VertXRequestInfo vertXRequestInfo = (VertXRequestInfo) content.getRequestInfo();
-        HttpSession httpSession = vertXRequestInfo.getRequest().getSession();
-        User user = (User)httpSession.getAttribute(ICoreUser.CORE_USER);
+        VertXRequestInfo vertXRequestInfo = content.getRequestInfo();
+        User user = webUserManage.getUser(vertXRequestInfo.getRequest());
 
         if(user == null) {
             throw new NoUserAccessDecisionCubeException();
