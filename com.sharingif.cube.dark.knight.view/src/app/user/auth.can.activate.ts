@@ -12,9 +12,10 @@ export class AuthCanActivate implements CanActivate {
   ) {};
 
   canActivate() {
-    if((this.uerService.isLogin())) {
+    if(this.uerService.isLogin()) {
       return true;
     } else {
+      this.router.navigate(['/login']);
       return false;
     }
   }

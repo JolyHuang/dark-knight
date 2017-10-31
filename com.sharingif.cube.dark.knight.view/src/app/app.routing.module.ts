@@ -36,16 +36,16 @@ const appRoutes: Routes = [
         component: TransactionDetailsComponent,
         canActivate:[AuthCanActivate],
       },
-      {
-        path: '',
-        redirectTo: 'home/dashboard',
-        pathMatch: 'full'
-      }
     ]
   },
   {
     path: 'login',
     component: UserLoginComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'home/dashboard',
+    pathMatch: 'full'
   }
 
 ];

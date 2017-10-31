@@ -20,25 +20,20 @@ export class UserService {
     if(this.user != null) {
       return true;
     }
+    return false;
+  }
+
+  getUser(): void {
     let superObject = this;
 
     let loginHttpRequest = new HttpRequest();
     loginHttpRequest.url = "user/user";
     loginHttpRequest.success = function (data) {
-      alert("success");
       superObject.user = data;
-      superObject.router.navigate(['/dashboard']);
-
-      return true;
-    };
-    loginHttpRequest.failure = function (data) {
-      alert("failure");
-      superObject.router.navigate(['/login']);
-      return false;
+      superObject.router.navigate(['/home/dashboard']);
+      this.user = data
     };
     this.http.get(loginHttpRequest);
-
-    return true;
   }
 
   login(user : User) {
@@ -50,7 +45,7 @@ export class UserService {
     loginHttpRequest.data = user;
     loginHttpRequest.success = function (data) {
       superObject.user = data;
-      superObject.router.navigateByUrl("dashboard");
+      superObject.router.navigateByUrl("/home/dashboard");
     };
     this.http.post(loginHttpRequest);
   }
