@@ -1,5 +1,7 @@
 package com.sharingif.cube.dark.knight.analysis.system.model.entity;
 
+import com.sharingif.cube.core.user.ICoreUser;
+
 /**
  * 用户信息
  *
@@ -8,10 +10,21 @@ package com.sharingif.cube.dark.knight.analysis.system.model.entity;
  * @since v1.0
  * 2017/10/26 下午12:47
  */
-public class User {
+public class User implements ICoreUser {
 
+    private String uniqueId;
     private String username;
     private String password;
+
+    @Override
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    @Override
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
 
     public String getUsername() {
         return username;

@@ -17,7 +17,28 @@ export class UserService {
   private user : User;
 
   isLogin(): boolean {
-    return this.user != null;
+    if(this.user != null) {
+      return true;
+    }
+    let superObject = this;
+
+    let loginHttpRequest = new HttpRequest();
+    loginHttpRequest.url = "user/user";
+    loginHttpRequest.success = function (data) {
+      alert("success");
+      superObject.user = data;
+      superObject.router.navigate(['/dashboard']);
+
+      return true;
+    };
+    loginHttpRequest.failure = function (data) {
+      alert("failure");
+      superObject.router.navigate(['/login']);
+      return false;
+    };
+    this.http.get(loginHttpRequest);
+
+    return true;
   }
 
   login(user : User) {

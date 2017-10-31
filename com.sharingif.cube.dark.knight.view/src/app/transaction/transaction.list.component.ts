@@ -11,7 +11,7 @@ declare var $:any;
 
 
 @Component({
-  selector: 'transaction',
+  selector: 'dashboard',
   templateUrl: './transaction.list.component.html',
 })
 

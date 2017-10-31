@@ -5,7 +5,6 @@ import { User } from "./user";
 import {UserService} from "./user.service";
 
 @Component({
-  selector: 'app-root',
   templateUrl: './user.login.component.html',
 })
 

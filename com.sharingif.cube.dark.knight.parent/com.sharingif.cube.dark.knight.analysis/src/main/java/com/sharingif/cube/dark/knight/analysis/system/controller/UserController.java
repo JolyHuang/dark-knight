@@ -1,6 +1,7 @@
 package com.sharingif.cube.dark.knight.analysis.system.controller;
 
 import com.sharingif.cube.core.exception.UnknownCubeException;
+import com.sharingif.cube.core.handler.bind.annotation.DataContainer;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMapping;
 import com.sharingif.cube.core.handler.bind.annotation.RequestMethod;
 import com.sharingif.cube.core.handler.chain.AHMChain;
@@ -35,6 +36,11 @@ public class UserController {
 
         return user;
 
+    }
+
+    @RequestMapping(value="user", method= RequestMethod.GET)
+    public User getUser(@DataContainer User user) {
+        return user;
     }
 
 }
