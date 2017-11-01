@@ -80,7 +80,15 @@ public abstract class AbstractDataHandler implements DataHandler {
         dataMap.put(TransactionType.TRANS_TYPE.toString(), getType());
         if(matcher.find()) {
             for(GroupData groupData : groupDataArray) {
-                dataMap.put(groupData.getDataKey(), matcher.group(groupData.getGroupIndex()));
+                String dataStr = matcher.group(groupData.getGroupIndex());
+                if(groupData.getType().isAssignableFrom(String.class)) {
+                    dataMap.put(groupData.getDataKey(), dataStr);
+                    continue;
+                }
+                if(groupData.getType().isAssignableFrom(Integer.class)) {
+                    dataMap.put(groupData.getDataKey(), Integer.valueOf(dataStr));
+                    continue;
+                }
             }
 
         }

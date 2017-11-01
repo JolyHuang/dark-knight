@@ -13,10 +13,18 @@ public class GroupData {
     public GroupData(int groupIndex, String dataKey) {
         this.groupIndex = groupIndex;
         this.dataKey = dataKey;
+        this.type = String.class;
+    }
+
+    public GroupData(int groupIndex, String dataKey, Class type) {
+        this.groupIndex = groupIndex;
+        this.dataKey = dataKey;
+        this.type = type;
     }
 
     private int groupIndex;
     private String dataKey;
+    private Class type;
 
     public int getGroupIndex() {
         return groupIndex;
@@ -34,11 +42,20 @@ public class GroupData {
         this.dataKey = dataKey;
     }
 
+    public Class getType() {
+        return type;
+    }
+
+    public void setType(Class type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("GroupData{");
         sb.append("groupIndex=").append(groupIndex);
         sb.append(", dataKey='").append(dataKey).append('\'');
+        sb.append(", type=").append(type);
         sb.append('}');
         return sb.toString();
     }

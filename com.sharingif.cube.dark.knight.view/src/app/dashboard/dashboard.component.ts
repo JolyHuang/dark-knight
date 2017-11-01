@@ -7,6 +7,7 @@ import { TransactionVolumeDay } from '../transaction/transaction.volume.day';
 import { TransactionDay } from '../transaction/transaction.day';
 import { TransactionDateTimeStatistics } from '../transaction/transaction.datetime.statistics';
 import { TransactionStatistics } from '../transaction/transaction.statistics';
+import {TransactionAvgExcuteTime} from "../transaction/transaction.avg.excute.time";
 
 @Component({
   selector: 'dashboard',
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit {
   transactionDay : TransactionDay = new TransactionDay();
   transactionDateTimeStatisticsArray : Array<TransactionDateTimeStatistics> = new Array<TransactionDateTimeStatistics>();
   transactionStatisticsArray : Array<TransactionStatistics> = new Array<TransactionStatistics>();
+  transactionAvgExcuteTimeArray : Array<TransactionAvgExcuteTime> = new Array<TransactionAvgExcuteTime>();
 
   // lineChart
   public lineChartLabels: Array<number> = new Array();
@@ -93,6 +95,9 @@ export class DashboardComponent implements OnInit {
     console.log(e);
   }
 
+  public avgExcuteTimeBarChartLabels: Array<string> = new Array();
+  public avgExcuteTimeBarChartData:  Array<any>= new Array();
+
   ngOnInit(): void {
 
     let superObject = this;
@@ -142,6 +147,24 @@ export class DashboardComponent implements OnInit {
       superObject.barChartData = superObject.barChartData.slice();
     };
     this.http.get(dayTransIdHttpRequest);
+
+    let avgExcuteTimeHttpRequest = new HttpRequest();
+    avgExcuteTimeHttpRequest.url = "transaction/statistics/avgExcuteTime";
+    avgExcuteTimeHttpRequest.success = function (data) {
+      superObject.transactionAvgExcuteTimeArray = data;
+
+      for(let transactionAvgExcuteTime  of superObject.transactionAvgExcuteTimeArray) {
+        let transId = transactionAvgExcuteTime.transId.replace("/api/", "");
+        if(transId.length>12) {
+          transId = transId.slice(0,9)+"...";
+        }
+        superObject.barChartLabels.push(transId);
+        superObject.barChartData.push(transactionAvgExcuteTime.avgExcuteTime);
+      }
+      superObject.avgExcuteTimeBarChartLabels = superObject.avgExcuteTimeBarChartLabels.slice();
+      superObject.avgExcuteTimeBarChartData = superObject.avgExcuteTimeBarChartData.slice();
+    };
+    this.http.get(avgExcuteTimeHttpRequest);
 
   };
 

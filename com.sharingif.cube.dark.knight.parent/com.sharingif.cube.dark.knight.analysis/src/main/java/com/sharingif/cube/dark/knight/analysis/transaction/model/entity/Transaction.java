@@ -16,8 +16,11 @@ public class Transaction {
 
     public static final String TRANSACTION_BEGIN = "transactionBegin";
     public static final String TRANSACTION_ERROR ="transactionError";
+    public static final String TRANSACTION_END = "transactionEnd";
     public static final String CONTROLLER_BEGIN = "controllerBegin";
     public static final String CONTROLLER_ERROR = "controllerError";
+
+    public static final String TRANS_EXCUTE_TIME = "transExcuteTime";
 
     public static final String REGISTER = "/api/register";
     public static final String RECHARGE_SUBMIT = "/api/rechargeSubmit";

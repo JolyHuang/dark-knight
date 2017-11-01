@@ -52,7 +52,7 @@ public class AppLogComponentsAutoconfigure {
                 ,new GroupData(6,"threadId")
                 ,new GroupData(7,"method")
                 ,new GroupData(8,"transId")
-                ,new GroupData(9,"transExcuteTime")
+                ,new GroupData(9,"transExcuteTime", Integer.class)
         };
 
         return groupIndexArray;
@@ -71,7 +71,7 @@ public class AppLogComponentsAutoconfigure {
                 ,new GroupData(6,"threadId")
                 ,new GroupData(7,"method")
                 ,new GroupData(8,"transId")
-                ,new GroupData(9,"transExcuteTime")
+                ,new GroupData(9,"transExcuteTime", Integer.class)
                 ,new GroupData(10,"message")
                 ,new GroupData(11,"localizedMessage")
                 ,new GroupData(12,"errorCause")

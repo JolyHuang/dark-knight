@@ -8,6 +8,7 @@ import com.sharingif.cube.core.util.StringUtils;
 import com.sharingif.cube.dark.knight.analysis.app.dao.impl.CubeMongoDBDAOImpl;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.Transaction;
+import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionAvgExcuteTime;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionDateTimeStatistics;
 import com.sharingif.cube.dark.knight.analysis.transaction.model.entity.TransactionStatistics;
 import com.sharingif.cube.persistence.database.pagination.PaginationCondition;
@@ -195,6 +196,39 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
         }
 
         return documentList;
+    }
+
+    @Override
+    public List<TransactionAvgExcuteTime> avgExcuteTime(Transaction transaction) {
+
+
+        MongoCursor<Document> cursor = getCollection().aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.and(
+                                Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin())
+                                ,Filters.eq(Transaction.TRANS_TYPE_KEY, transaction.getTransType())
+                        )),
+                        Aggregates.group("$"+Transaction.TRANS_ID_KEY,  Accumulators.avg(Transaction.TRANS_EXCUTE_TIME, "avgExcuteTime")),
+                        Aggregates.sort(Sorts.orderBy(Sorts.descending("avgExcuteTime"))),
+                        Aggregates.limit(30)
+                )
+        ).iterator();
+        List<TransactionAvgExcuteTime> documentList = new LinkedList<TransactionAvgExcuteTime>();
+        try {
+            while (cursor.hasNext()) {
+                Document document = cursor.next();
+                TransactionAvgExcuteTime transactionAvgExcuteTime = new TransactionAvgExcuteTime();
+                transactionAvgExcuteTime.setTransId(document.getString("_id"));
+                transactionAvgExcuteTime.setAvgExcuteTime(document.getInteger("avgExcuteTime"));
+
+                documentList.add(transactionAvgExcuteTime);
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return documentList;
+
     }
 
 }

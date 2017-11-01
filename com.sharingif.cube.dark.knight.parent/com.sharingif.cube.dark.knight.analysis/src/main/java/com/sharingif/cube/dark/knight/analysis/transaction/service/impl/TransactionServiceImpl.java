@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -182,6 +183,17 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setTransType(Transaction.CONTROLLER_BEGIN);
 
         return transactionDAO.statisticsByTransId(transaction);
+    }
+
+    @Override
+    public List<TransactionAvgExcuteTime> avgExcuteTime() {
+
+        Transaction transaction = new Transaction();
+        transaction.setStartTimeBegin(DateUtils.add(new Date(), Calendar.HOUR_OF_DAY, -1));
+        transaction.setTransType(Transaction.TRANSACTION_END);
+
+
+        return transactionDAO.avgExcuteTime(transaction);
     }
 
 }

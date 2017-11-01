@@ -61,4 +61,9 @@ public class TransactionController {
     public List<TransactionStatistics> statisticsByTransId() {
         return transactionService.statisticsByTransId();
     }
+
+    @RequestMapping(value="statistics/avgExcuteTime", method= RequestMethod.GET)
+    public List<TransactionAvgExcuteTime> avgExcuteTime() {
+        return transactionService.avgExcuteTime();
+    }
 }

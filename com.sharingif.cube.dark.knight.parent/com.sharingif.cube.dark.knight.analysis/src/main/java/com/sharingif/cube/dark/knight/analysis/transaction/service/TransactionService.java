@@ -30,4 +30,6 @@ public interface TransactionService {
 
     List<TransactionStatistics> statisticsByTransId();
 
+    List<TransactionAvgExcuteTime> avgExcuteTime();
+
 }
