@@ -208,7 +208,7 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
                                 Filters.gte(Transaction.START_TIME_KEY, transaction.getStartTimeBegin())
                                 ,Filters.eq(Transaction.TRANS_TYPE_KEY, transaction.getTransType())
                         )),
-                        Aggregates.group("$"+Transaction.TRANS_ID_KEY,  Accumulators.avg(Transaction.TRANS_EXCUTE_TIME, "avgExcuteTime")),
+                        Aggregates.group("$"+Transaction.TRANS_ID_KEY,  Accumulators.avg("avgExcuteTime", "$"+Transaction.TRANS_EXCUTE_TIME)),
                         Aggregates.sort(Sorts.orderBy(Sorts.descending("avgExcuteTime"))),
                         Aggregates.limit(30)
                 )
@@ -219,7 +219,7 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
                 Document document = cursor.next();
                 TransactionAvgExcuteTime transactionAvgExcuteTime = new TransactionAvgExcuteTime();
                 transactionAvgExcuteTime.setTransId(document.getString("_id"));
-                transactionAvgExcuteTime.setAvgExcuteTime(document.getInteger("avgExcuteTime"));
+                transactionAvgExcuteTime.setAvgExcuteTime(document.getDouble("avgExcuteTime").intValue());
 
                 documentList.add(transactionAvgExcuteTime);
             }

@@ -158,8 +158,8 @@ export class DashboardComponent implements OnInit {
         if(transId.length>12) {
           transId = transId.slice(0,9)+"...";
         }
-        superObject.barChartLabels.push(transId);
-        superObject.barChartData.push(transactionAvgExcuteTime.avgExcuteTime);
+        superObject.avgExcuteTimeBarChartLabels.push(transId);
+        superObject.avgExcuteTimeBarChartData.push(transactionAvgExcuteTime.avgExcuteTime);
       }
       superObject.avgExcuteTimeBarChartLabels = superObject.avgExcuteTimeBarChartLabels.slice();
       superObject.avgExcuteTimeBarChartData = superObject.avgExcuteTimeBarChartData.slice();
