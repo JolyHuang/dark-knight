@@ -20,7 +20,7 @@ public interface TransactionService {
 
     PaginationRepertory<Document> getList(PaginationCondition<Transaction> paginationCondition);
 
-    List<Document> getDetailsByTransUniqueId(String transUniqueId);
+    List<Document> getDetailsByTransUniqueId(String transUniqueId, Long startTime);
 
     TransactionVolumeDay getTransactionVolumeDay();
 

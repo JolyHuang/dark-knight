@@ -91,13 +91,18 @@ public class TransactionDAOImpl extends CubeMongoDBDAOImpl implements Transactio
     }
 
     @Override
-    public List<Document> queryList(String transUniqueId) {
+    public List<Document> queryList(Transaction transaction) {
 
         BasicDBObject filter = new BasicDBObject();
-        filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transUniqueId);
+
+        BasicDBObject startTime = new BasicDBObject();
+        filter.put(Transaction.START_TIME_KEY, startTime.append("$gte", transaction.getStartTimeBegin()));
+        startTime.append("$lt", transaction.getStartTimeEnd());
+
+        filter.put(Transaction.TRANS_UNIQUE_ID_KEY, transaction.getTransUniqueId());
 
         List<Document> documentList = new LinkedList<Document>();
-        MongoCursor<Document> cursor = getCollection().find(filter).sort(new BasicDBObject(Transaction.START_TIME_KEY,1)).iterator();
+        MongoCursor<Document> cursor = getCollection().find(filter).sort(Sorts.ascending(Transaction.START_TIME_KEY)).iterator();
         try {
             while (cursor.hasNext()) {
                 documentList.add(cursor.next());

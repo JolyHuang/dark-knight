@@ -23,7 +23,7 @@ public interface TransactionDAO {
 
     PaginationRepertory<Document> queryList(PaginationCondition<Transaction> paginationCondition);
 
-    List<Document> queryList(String transUniqueId);
+    List<Document> queryList(Transaction transaction);
 
     Long queryCount(Transaction transaction);
 

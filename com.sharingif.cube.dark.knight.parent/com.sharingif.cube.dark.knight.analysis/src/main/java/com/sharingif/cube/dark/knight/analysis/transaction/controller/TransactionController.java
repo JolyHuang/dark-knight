@@ -37,9 +37,9 @@ public class TransactionController {
         return transactionService.getList(paginationCondition);
     }
 
-    @RequestMapping(value="details/{transUniqueId}", method= RequestMethod.GET)
-    public List<Document> details(@PathVariable("transUniqueId") String transUniqueId) {
-        return transactionService.getDetailsByTransUniqueId(transUniqueId);
+    @RequestMapping(value="details/{transUniqueId}/{startTime}", method= RequestMethod.GET)
+    public List<Document> details(@PathVariable("transUniqueId") String transUniqueId, @PathVariable("startTime")Long startTime) {
+        return transactionService.getDetailsByTransUniqueId(transUniqueId, startTime);
     }
 
     @RequestMapping(value="volume/day", method= RequestMethod.GET)

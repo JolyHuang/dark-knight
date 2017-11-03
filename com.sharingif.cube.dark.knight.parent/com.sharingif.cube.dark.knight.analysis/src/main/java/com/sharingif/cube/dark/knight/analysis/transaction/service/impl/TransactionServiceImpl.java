@@ -1,5 +1,6 @@
 package com.sharingif.cube.dark.knight.analysis.transaction.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sharingif.cube.core.exception.CubeRuntimeException;
 import com.sharingif.cube.core.util.DateUtils;
 import com.sharingif.cube.dark.knight.analysis.transaction.dao.TransactionDAO;
@@ -42,9 +43,17 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Document> getDetailsByTransUniqueId(String transUniqueId) {
+    public List<Document> getDetailsByTransUniqueId(String transUniqueId, Long startTime) {
+        Date startTimeBegin = new Date(startTime);
+        Date startTimeEnd = DateUtils.add(startTimeBegin, Calendar.HOUR_OF_DAY, 1);
 
-        return transactionDAO.queryList(transUniqueId);
+        Transaction transaction = new Transaction();
+        transaction.setStartTimeBegin(startTimeBegin);
+        transaction.setStartTimeEnd(startTimeEnd);
+        transaction.setTransUniqueId(transUniqueId);
+
+
+        return transactionDAO.queryList(transaction);
     }
 
     @Override

@@ -21,6 +21,7 @@ export class TransactionDetailsComponent implements OnInit {
   ) {};
 
   transUniqueId : string;
+  startTime : string;
   transactionList = null;
 
   queryDetail() : void {
@@ -28,7 +29,7 @@ export class TransactionDetailsComponent implements OnInit {
     let superObject = this;
 
     let httpRequest = new HttpRequest();
-    httpRequest.url = "transaction/details/"+this.transUniqueId;
+    httpRequest.url = "transaction/details/"+this.transUniqueId+"/"+this.startTime;
     httpRequest.success = function (data) {
       superObject.transactionList = data;
     };
@@ -39,6 +40,7 @@ export class TransactionDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.transUniqueId = params.transUniqueId;
+      this.startTime = params.startTime;
       this.queryDetail();
     });
   }
