@@ -25,7 +25,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.jdk.version>1.8</project.build.jdk.version>
-        <maven.project.com.sharingif.cube.spring.boot.version>3.0.1-RELEASE</maven.project.com.sharingif.cube.spring.boot.version>
+        <maven.project.com.sharingif.cube.spring.boot.version>4.0.0-RELEASE</maven.project.com.sharingif.cube.spring.boot.version>
 
         <maven.cube.groupId>com.sharingif.cube</maven.cube.groupId>
         <maven.cube.boot.groupId>com.sharingif.cube.spring.boot</maven.cube.boot.groupId>
