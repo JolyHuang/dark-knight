@@ -25,7 +25,7 @@ export class TransactionListComponent implements OnInit {
   transTypeList = [
     {"name": "transactionBegin", "value": "transactionBegin"},
     {"name": "transactionError", "value": "transactionError"},
-    {"name": "transactionError", "value": "controllerBegin"}
+    {"name": "controllerBegin", "value": "controllerBegin"}
   ];
 
   @Input() trans: Transaction = new Transaction();
