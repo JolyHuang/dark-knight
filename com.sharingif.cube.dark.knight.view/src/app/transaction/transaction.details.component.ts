@@ -32,6 +32,15 @@ export class TransactionDetailsComponent implements OnInit {
     httpRequest.url = "transaction/details/"+this.transUniqueId+"/"+this.startTime;
     httpRequest.success = function (data) {
       superObject.transactionList = data;
+
+      for(let trans  of data) {
+        let errorCause = trans["errorCause"];
+        if(errorCause) {
+          trans["errorCause"] = trans["errorCause"].replace(/(\n)/g,"<br/>");
+          console.log(trans["errorCause"]);
+        }
+      }
+
     };
     this.http.get(httpRequest);
 

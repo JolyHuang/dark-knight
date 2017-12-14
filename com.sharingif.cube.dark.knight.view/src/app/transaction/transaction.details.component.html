@@ -21,7 +21,7 @@
               <div *ngIf="transaction.transExcuteTime">交易执行时间：{{transaction.transExcuteTime}}毫秒</div>
               <div *ngIf="transaction.message">错误信息：{{transaction.message}}</div>
               <div *ngIf="transaction.localizedMessage">本地错误信息：{{transaction.localizedMessage}}</div>
-              <div *ngIf="transaction.errorCause">本地错误内容：{{transaction.errorCause}}</div>
+              <div *ngIf="transaction.errorCause">本地错误内容：<div [innerHTML]="transaction.errorCause"></div></div>
             </div>
           </div>
         </div>
