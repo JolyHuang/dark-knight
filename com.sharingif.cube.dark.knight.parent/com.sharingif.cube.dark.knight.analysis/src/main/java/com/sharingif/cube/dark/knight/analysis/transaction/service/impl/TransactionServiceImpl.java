@@ -45,7 +45,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Document> getDetailsByTransUniqueId(String transUniqueId, Long startTime) {
         Date startTimeBegin = new Date(startTime);
-        Date startTimeEnd = DateUtils.add(startTimeBegin, Calendar.HOUR_OF_DAY, 1);
+        startTimeBegin = DateUtils.add(startTimeBegin, Calendar.HOUR_OF_DAY, -1);
+        Date startTimeEnd = DateUtils.add(startTimeBegin, Calendar.HOUR_OF_DAY, 2);
 
         Transaction transaction = new Transaction();
         transaction.setStartTimeBegin(startTimeBegin);
@@ -62,14 +63,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         Date currentDate = new Date();
         String currentDateString = DateUtils.getDate(currentDate, DateUtils.DATE_ISO_FORMAT);
-        Date currentDateBegin = null;
-        Date currentDateEnd = null;
-        try {
-            currentDateBegin = DateUtils.getDate(currentDateString+" 00:00:00", DateUtils.DATETIME_ISO_FORMAT);
-            currentDateEnd = DateUtils.getDate(currentDateString+" 23:59:59", DateUtils.DATETIME_ISO_FORMAT);
-        } catch (ParseException e) {
-            throw new CubeRuntimeException("data fromart error", e);
-        }
+        Date currentDateBegin = DateUtils.getDate(currentDateString+" 00:00:00", DateUtils.DATETIME_ISO_FORMAT);
+        Date currentDateEnd = DateUtils.getDate(currentDateString+" 23:59:59", DateUtils.DATETIME_ISO_FORMAT);
 
         Transaction transactionTotal = new Transaction();
         transactionTotal.setStartTimeBegin(currentDateBegin);
@@ -99,12 +94,9 @@ public class TransactionServiceImpl implements TransactionService {
         String currentDateString = DateUtils.getDate(currentDate, DateUtils.DATE_ISO_FORMAT);
         Date currentDateBegin = null;
         Date currentDateEnd = null;
-        try {
-            currentDateBegin = DateUtils.getDate(currentDateString+" 00:00:00", DateUtils.DATETIME_ISO_FORMAT);
-            currentDateEnd = DateUtils.getDate(currentDateString+" 23:59:59", DateUtils.DATETIME_ISO_FORMAT);
-        } catch (ParseException e) {
-            throw new CubeRuntimeException("data fromart error", e);
-        }
+
+        currentDateBegin = DateUtils.getDate(currentDateString+" 00:00:00", DateUtils.DATETIME_ISO_FORMAT);
+        currentDateEnd = DateUtils.getDate(currentDateString+" 23:59:59", DateUtils.DATETIME_ISO_FORMAT);
 
         Transaction registerTransaction = new Transaction();
         registerTransaction.setStartTimeBegin(currentDateBegin);
@@ -147,12 +139,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<TransactionDateTimeStatistics> statisticsByDayHour() {
 
-        Date currentDate = null;
-        try {
-            currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
-        } catch (ParseException e) {
-            throw new CubeRuntimeException("data fromart error", e);
-        }
+        Date currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
         Transaction transaction = new Transaction();
         transaction.setStartTimeBegin(currentDate);
         transaction.setTransType(Transaction.CONTROLLER_BEGIN);
@@ -181,12 +168,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<TransactionStatistics> statisticsByTransId() {
 
-        Date currentDate = null;
-        try {
-            currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
-        } catch (ParseException e) {
-            throw new CubeRuntimeException("data fromart error", e);
-        }
+        Date currentDate = DateUtils.getDate(DateUtils.getCurrentDate(DateUtils.DATE_ISO_FORMAT), DateUtils.DATE_ISO_FORMAT);
         Transaction transaction = new Transaction();
         transaction.setStartTimeBegin(currentDate);
         transaction.setTransType(Transaction.CONTROLLER_BEGIN);
